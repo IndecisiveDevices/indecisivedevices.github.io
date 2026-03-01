@@ -33,7 +33,7 @@ function initContactForm() {
       e.preventDefault();
 
       // Get form data
-      const name = document.getElementById("name").value;
+      const name = document.getElementById("contact-form-name").value;
       const email = document.getElementById("email").value;
       const subject = document.getElementById("subject").value;
       const message = document.getElementById("message").value;
