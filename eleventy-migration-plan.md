@@ -3,7 +3,7 @@
 **Version:** 1.0  
 **Date:** March 7, 2026  
 **Author:** Senior Web Developer  
-**Goal:** Migrate the current static SPA to Eleventy on GitHub Pages with zero visual regressions  
+**Goal:** Migrate the current static SPA to Eleventy on GitHub Pages with zero visual regressions
 
 ---
 
@@ -15,7 +15,7 @@ Eleventy is a simpler, faster, and more flexible static site generator — it ru
 
 **Estimated effort:** 2–3 focused sessions (5–8 hours total)  
 **Risk level:** Low (incremental migration with Git branching)  
-**Outcome:** Identical visual experience + data-driven content via JSON/YAML + easier long-term maintenance  
+**Outcome:** Identical visual experience + data-driven content via JSON/YAML + easier long-term maintenance
 
 ---
 
@@ -23,19 +23,19 @@ Eleventy is a simpler, faster, and more flexible static site generator — it ru
 
 ### 1.1 Current Project Inventory
 
-| File | Size | Purpose |
-|------|------|---------|
-| `index.html` | 543 lines / 19 KB | Monolithic SPA with all sections |
-| `css/style.css` | 712 lines / 12 KB | Complete styling with CSS variables, responsive breakpoints |
-| `js/main.js` | 371 lines / 10 KB | AOS init, contact form (mailto), smooth scroll, active nav, scroll-to-top |
-| `assets/logo.png` | 1.9 MB | Team logo (used in navbar, hero, placeholders) |
-| `assets/2025-26_bot.jpg` | 1.2 MB | Current season robot photo |
-| `assets/Team Photo.jpg` | 965 KB | Team photo (About section) |
-| `assets/Johnson_Matthey _Logo_blue.svg` | 12 KB | Sponsor logo (**space in filename**) |
-| `assets/acf-search.webp` | 23 KB | Sponsor logo |
-| `data/` | empty | Unused directory |
-| `.gitignore` | Node.js template (no Eleventy entries yet) |
-| `README.md` | References `docs/` folder and `FtcRobotController` URL — **outdated** |
+| File                                    | Size                                                                  | Purpose                                                                   |
+| --------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `index.html`                            | 543 lines / 19 KB                                                     | Monolithic SPA with all sections                                          |
+| `css/style.css`                         | 712 lines / 12 KB                                                     | Complete styling with CSS variables, responsive breakpoints               |
+| `js/main.js`                            | 371 lines / 10 KB                                                     | AOS init, contact form (mailto), smooth scroll, active nav, scroll-to-top |
+| `assets/logo.png`                       | 1.9 MB                                                                | Team logo (used in navbar, hero, placeholders)                            |
+| `assets/2025-26_bot.jpg`                | 1.2 MB                                                                | Current season robot photo                                                |
+| `assets/Team Photo.jpg`                 | 965 KB                                                                | Team photo (About section)                                                |
+| `assets/Johnson_Matthey _Logo_blue.svg` | 12 KB                                                                 | Sponsor logo (**space in filename**)                                      |
+| `assets/acf-search.webp`                | 23 KB                                                                 | Sponsor logo                                                              |
+| `data/`                                 | empty                                                                 | Unused directory                                                          |
+| `.gitignore`                            | Node.js template (no Eleventy entries yet)                            |
+| `README.md`                             | References `docs/` folder and `FtcRobotController` URL — **outdated** |
 
 ### 1.2 Current Architecture
 
@@ -48,30 +48,33 @@ Eleventy is a simpler, faster, and more flexible static site generator — it ru
 
 ### 1.3 Sections in index.html (in order)
 
-| Section | Lines | ID | Notes |
-|---------|-------|----|-------|
-| Navigation | 35–80 | — | Fixed navbar, Bootstrap collapse |
-| Hero | 82–110 | `home` | Gradient background, CTAs, logo image |
-| About | 112–149 | `about` | Team photo (`Team Photo.jpg`), mission text |
-| Robots | 151–249 | `robots` | Current bot (`2025-26_bot.jpg`) + 3 past robot cards |
-| Sponsors | 251–307 | `sponsors` | 2 sponsors: Johnson Matthey (platinum), ACF Search (gold) |
-| Get Involved | 309–417 | `get-involved` | 3 involvement cards + contact form |
-| Donate | 419–467 | `donate` | Mission/benefits list + QR placeholder |
-| Google Form | 469–489 | `google-form` | **Commented out** (Trivia Night iframe) |
-| Footer | 491–531 | — | Quick links, social emoji icons, copyright |
+| Section      | Lines   | ID             | Notes                                                     |
+| ------------ | ------- | -------------- | --------------------------------------------------------- |
+| Navigation   | 35–80   | —              | Fixed navbar, Bootstrap collapse                          |
+| Hero         | 82–110  | `home`         | Gradient background, CTAs, logo image                     |
+| About        | 112–149 | `about`        | Team photo (`Team Photo.jpg`), mission text               |
+| Robots       | 151–249 | `robots`       | Current bot (`2025-26_bot.jpg`) + 3 past robot cards      |
+| Sponsors     | 251–307 | `sponsors`     | 2 sponsors: Johnson Matthey (platinum), ACF Search (gold) |
+| Get Involved | 309–417 | `get-involved` | 3 involvement cards + contact form                        |
+| Donate       | 419–467 | `donate`       | Mission/benefits list + QR placeholder                    |
+| Google Form  | 469–489 | `google-form`  | **Commented out** (Trivia Night iframe)                   |
+| Footer       | 491–531 | —              | Quick links, social emoji icons, copyright                |
 
 ### 1.4 What Should Become Data-Driven vs. Static
 
 **Data-driven (`_data/` JSON or YAML):**
+
 - Sponsors — logo paths, URLs, tier, display widths
 - Robots — current robot specs + past robots list
 - Navigation links (optional, future)
 
 **Static (layouts/includes):**
+
 - Navigation bar structure, Hero section, About section content
 - Get Involved cards + contact form, Donate section, Footer
 
 **Unchanged (client-side JS):**
+
 - AOS initialization, Contact form handling (mailto)
 - Smooth scroll navigation, Active nav link highlighting, Scroll-to-top button
 
@@ -90,20 +93,24 @@ Phase 3 (1-2 hours)   -> Polish: verification, SEO, GitHub Actions deploy
 
 ---
 
-### Phase 0: Preflight and Safety Net
+### ✅ Phase 0: Preflight and Safety Net
 
 **Objective:** Ensure you can always roll back quickly.
 
-#### 0.1 Create migration branch
+#### ✅ 0.1 Create migration branch
+
 ```bash
 git checkout -b feature/eleventy-migration
 ```
 
-#### 0.2 Capture baseline screenshots
+#### ✅ 0.2 Capture baseline screenshots
+
 Take screenshots at 3 viewports (desktop 1440px, tablet 768px, mobile 390px).
 
-#### 0.3 Confirm asset inventory
+#### ✅ 0.3 Confirm asset inventory
+
 Verify these exact filenames (note the space in the Johnson Matthey filename):
+
 ```
 assets/logo.png
 assets/2025-26_bot.jpg
@@ -112,7 +119,7 @@ assets/Johnson_Matthey _Logo_blue.svg   <-- space before _Logo
 assets/acf-search.webp
 ```
 
-#### 0.4 Set up local Eleventy environment
+#### ✅ 0.4 Set up local Eleventy environment
 
 > **No Ruby required.** Eleventy runs on Node.js, which is likely already installed if you have `npm` available.
 
@@ -121,8 +128,10 @@ npm init -y
 npm install --save-dev @11ty/eleventy
 ```
 
-#### 0.5 Update .gitignore for Eleventy
+#### ✅ 0.5 Update .gitignore for Eleventy
+
 Add at the end of the existing `.gitignore`:
+
 ```
 # Eleventy
 _site/
@@ -131,19 +140,18 @@ node_modules/
 
 > **Note:** The existing `.gitignore` already has a Node.js template, which may already include `node_modules/`. Verify and only add what is missing.
 
-**Exit criteria:** Branch exists, baseline screenshots captured, `npx @11ty/eleventy --help` runs successfully, `.gitignore` updated.
+**✅ Exit criteria:** Branch exists, baseline screenshots captured, `npx @11ty/eleventy --help` runs successfully, `.gitignore` updated.
 
 ---
 
-### Phase 1: Structural Conversion (Zero Visual Changes)
+### ✅ Phase 1: Structural Conversion (Zero Visual Changes)
 
 **Goal:** Eleventy builds and produces HTML identical to the current site.
 
-#### 1.1 Create `.eleventy.js` (Configuration File)
+#### ✅ 1.1 Create `.eleventy.js` (Configuration File)
 
 ```js
-module.exports = function(eleventyConfig) {
-
+module.exports = function (eleventyConfig) {
   // Pass through static assets (copy as-is to _site/)
   eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy("css");
@@ -160,12 +168,12 @@ module.exports = function(eleventyConfig) {
     dataTemplateEngine: "njk",
 
     dir: {
-      input: "src",          // Source directory
+      input: "src", // Source directory
       includes: "_includes", // Relative to input dir: src/_includes/
-      layouts: "_layouts",   // Relative to input dir: src/_layouts/
-      data: "_data",         // Relative to input dir: src/_data/
-      output: "_site"        // Build output directory
-    }
+      layouts: "_layouts", // Relative to input dir: src/_layouts/
+      data: "_data", // Relative to input dir: src/_data/
+      output: "_site", // Build output directory
+    },
   };
 };
 ```
@@ -174,7 +182,7 @@ module.exports = function(eleventyConfig) {
 
 > **Why Nunjucks?** Nunjucks is the most popular Eleventy templating language. It is powerful (supports macros, block inheritance, etc.) and is very well-suited for this project's needs.
 
-#### 1.2 Create `src/_layouts/default.njk`
+#### ✅ 1.2 Create `src/_layouts/default.njk`
 
 ```html
 <!doctype html>
@@ -182,7 +190,10 @@ module.exports = function(eleventyConfig) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="{{ description or metadata.description }}" />
+    <meta
+      name="description"
+      content="{{ description or metadata.description }}"
+    />
     <meta name="author" content="{{ metadata.author }}" />
     <title>{{ title or metadata.title }}</title>
 
@@ -195,7 +206,10 @@ module.exports = function(eleventyConfig) {
     />
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
     <!-- AOS (Animate On Scroll) -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
@@ -204,11 +218,7 @@ module.exports = function(eleventyConfig) {
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    {% include "header.njk" %}
-
-    {{ content | safe }}
-
-    {% include "footer.njk" %}
+    {% include "header.njk" %} {{ content | safe }} {% include "footer.njk" %}
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -223,12 +233,13 @@ module.exports = function(eleventyConfig) {
 ```
 
 > **Key Nunjucks details:**
+>
 > - Uses `{{ content | safe }}` instead of `{{ content }}` — Nunjucks requires `| safe` to render raw HTML without escaping.
 > - Uses `{{ title or metadata.title }}` — Nunjucks uses `or` for defaults, and global data lives in `metadata` (from `_data/metadata.json`).
 > - CSS/JS paths use leading `/` (root-relative) — no `relative_url` filter needed because the site is at the root.
 > - The `<title>` avoids duplication.
 
-#### 1.3 Create Global Data: `src/_data/metadata.json`
+#### ✅ 1.3 Create Global Data: `src/_data/metadata.json`
 
 ```json
 {
@@ -241,7 +252,7 @@ module.exports = function(eleventyConfig) {
 
 > **Eleventy global data:** Any file in `_data/` is automatically available as a global variable. `metadata.json` becomes `{{ metadata.title }}`, `{{ metadata.url }}`, etc. in all templates.
 
-#### 1.4 Extract Includes
+#### ✅ 1.4 Extract Includes
 
 Create `src/_includes/` directory with Nunjucks partials extracted from `index.html`:
 
@@ -258,7 +269,7 @@ Create `src/_includes/` directory with Nunjucks partials extracted from `index.h
 
 > **File extension:** All includes use `.njk` (Nunjucks) instead of `.html`. This is Eleventy convention and enables Nunjucks syntax highlighting in editors.
 
-#### 1.5 Convert index.html to Eleventy Page
+#### ✅ 1.5 Convert index.html to Eleventy Page
 
 Create `src/index.njk`:
 
@@ -269,19 +280,16 @@ title: Indecisive Devices | FTC Team
 description: "Indecisive Devices - FIRST Tech Challenge Team"
 ---
 
-{% include "hero.njk" %}
-{% include "about.njk" %}
-{% include "robots.njk" %}
-{% include "sponsors.njk" %}
-{% include "get-involved.njk" %}
-{% include "donate.njk" %}
+{% include "hero.njk" %} {% include "about.njk" %} {% include "robots.njk" %} {%
+include "sponsors.njk" %} {% include "get-involved.njk" %} {% include
+"donate.njk" %}
 ```
 
 > **Why `index.njk` not `index.md`?** Content is all HTML includes. Using `.njk` avoids Markdown processing surprises.
 
 > **Why `.njk` not `.html`?** Using `.njk` clearly signals this is a template file processed by Nunjucks. Eleventy will output it as `index.html` in `_site/`.
 
-#### 1.6 Update Passthrough Copy for Root-Level Assets
+#### ✅ 1.6 Update Passthrough Copy for Root-Level Assets
 
 Since assets, CSS, and JS are at the project root (not inside `src/`), the `.eleventy.js` config already uses `addPassthroughCopy` to copy them to the output. The key insight:
 
@@ -300,7 +308,7 @@ Project root:
 
 > **Why keep assets at root?** This avoids unnecessary path churn. The passthrough copy preserves all URLs.
 
-#### 1.7 Test Phase 1
+#### ✅ 1.7 Test Phase 1
 
 ```bash
 npx @11ty/eleventy --serve
@@ -309,20 +317,21 @@ npx @11ty/eleventy --serve
 This starts a dev server with live reload (BrowserSync built-in) at `localhost:8080`.
 
 **Phase 1 checklist:**
-- [ ] `eleventy --serve` runs without build errors
-- [ ] Homepage loads at `localhost:8080`
-- [ ] Navbar visible with logo and all 6 links
-- [ ] Hero section renders with gradient and CTAs
-- [ ] All 6 sections scroll correctly via nav links
-- [ ] Team Photo and robot photos display
-- [ ] Both sponsor logos load (especially Johnson Matthey SVG)
-- [ ] Contact form submits and opens mail client
-- [ ] AOS animations trigger on scroll
-- [ ] Scroll-to-top button appears on scroll
-- [ ] No JavaScript errors in browser console
-- [ ] Mobile navbar hamburger works
 
-**Exit criteria:** Side-by-side comparison with baseline screenshots shows no visual differences.
+- [x] `eleventy --serve` runs without build errors
+- [x] Homepage loads at `localhost:8080`
+- [x] Navbar visible with logo and all 6 links
+- [x] Hero section renders with gradient and CTAs
+- [x] All 6 sections scroll correctly via nav links
+- [x] Team Photo and robot photos display
+- [x] Both sponsor logos load (especially Johnson Matthey SVG)
+- [x] Contact form submits and opens mail client
+- [x] AOS animations trigger on scroll
+- [x] Scroll-to-top button appears on scroll
+- [x] No JavaScript errors in browser console
+- [x] Mobile navbar hamburger works
+
+**✅ Exit criteria:** Side-by-side comparison with baseline screenshots shows no visual differences.
 
 ---
 
@@ -362,18 +371,36 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 ```html
 <section id="sponsors" class="sponsors-section py-5">
   <div class="container">
-    <h2 class="section-title text-center mb-5" data-aos="fade-up">Our Sponsors</h2>
-    <p class="text-center section-text mb-5" data-aos="fade-up" data-aos-delay="100">
-      We are grateful for the support of our amazing sponsors who make our team possible.
+    <h2 class="section-title text-center mb-5" data-aos="fade-up">
+      Our Sponsors
+    </h2>
+    <p
+      class="text-center section-text mb-5"
+      data-aos="fade-up"
+      data-aos-delay="100"
+    >
+      We are grateful for the support of our amazing sponsors who make our team
+      possible.
     </p>
     <div class="sponsor-tier mb-5">
       <div class="row justify-content-center">
         {% for sponsor in sponsors %}
-        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+        <div
+          class="col-md-4 mb-4"
+          data-aos="fade-up"
+          data-aos-delay="{{ loop.index * 100 }}"
+        >
           <div class="sponsor-logo">
-            <a href="{{ sponsor.url }}" target="_blank" rel="noopener noreferrer">
-              <img src="/assets/{{ sponsor.logo }}"
-                   width="{{ sponsor.width }}" alt="{{ sponsor.logo_alt }}" />
+            <a
+              href="{{ sponsor.url }}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="/assets/{{ sponsor.logo }}"
+                width="{{ sponsor.width }}"
+                alt="{{ sponsor.logo_alt }}"
+              />
             </a>
           </div>
         </div>
@@ -389,6 +416,7 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 ```
 
 > **Key Nunjucks features:**
+>
 > - `{% for sponsor in sponsors %}` — data file name becomes the variable directly.
 > - `{{ loop.index * 100 }}` — Nunjucks uses `loop.index` and supports inline math.
 
@@ -404,9 +432,15 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
     "description": "Our flagship robot for the 2025-2026 season, designed and built by our talented team of engineers and mechanics.",
     "features": [
       { "label": "Drive System", "value": "Mecanum" },
-      { "label": "Autonomous Capabilities", "value": "Pick up and launch game elements" },
+      {
+        "label": "Autonomous Capabilities",
+        "value": "Pick up and launch game elements"
+      },
       { "label": "Manipulators", "value": "Lift Kit and kicker mechanisms" },
-      { "label": "Motor, Servo, and Sensor count", "value": "8 motors, 2 servos, and 3 sensors" }
+      {
+        "label": "Motor, Servo, and Sensor count",
+        "value": "8 motors, 2 servos, and 3 sensors"
+      }
     ]
   },
   "past": [
@@ -439,11 +473,16 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 ```html
 <section id="robots" class="robots-section py-5">
   <div class="container">
-    <h2 class="section-title text-center mb-5" data-aos="fade-up">Our Robots</h2>
+    <h2 class="section-title text-center mb-5" data-aos="fade-up">
+      Our Robots
+    </h2>
     <div class="row mb-5">
       <div class="col-lg-6" data-aos="fade-right">
-        <img src="/assets/{{ robots.current.image }}"
-             alt="{{ robots.current.image_alt }}" class="img-fluid rounded-lg shadow-lg" />
+        <img
+          src="/assets/{{ robots.current.image }}"
+          alt="{{ robots.current.image_alt }}"
+          class="img-fluid rounded-lg shadow-lg"
+        />
       </div>
       <div class="col-lg-6" data-aos="fade-left">
         <h3 class="robot-title">{{ robots.current.name }}</h3>
@@ -460,11 +499,18 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
       <h4 class="mb-4" data-aos="fade-up">Past Robots</h4>
       <div class="row">
         {% for robot in robots.past %}
-        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+        <div
+          class="col-md-4 mb-4"
+          data-aos="fade-up"
+          data-aos-delay="{{ loop.index * 100 }}"
+        >
           <div class="robot-card">
-            <img src="/assets/{{ robot.image }}" alt="{{ robot.image_alt }}"
-                 class="img-fluid rounded-lg"
-                 style="max-width: 40px; max-height: 50px; width: auto; height: auto;" />
+            <img
+              src="/assets/{{ robot.image }}"
+              alt="{{ robot.image_alt }}"
+              class="img-fluid rounded-lg"
+              style="max-width: 40px; max-height: 50px; width: auto; height: auto;"
+            />
             <h5 class="mt-3">{{ robot.name }}</h5>
             <p class="small text-muted">{{ robot.status }}</p>
           </div>
@@ -521,6 +567,7 @@ eleventyExcludeFromCollections: true
 #### 3.3 Branding Verification
 
 **Color scheme (CSS variables — must be unchanged):**
+
 - `--primary: #0ca598` (Teal) | `--secondary: #c7bb39` (Yellow) | `--accent: #c23e46` (Red)
 - `--dark: #1a1a1a` | `--light: #f8f9fa`
 
@@ -531,6 +578,7 @@ eleventyExcludeFromCollections: true
 #### 3.4 Final Verification Checklist
 
 **Functional:**
+
 - [ ] All 6 navbar links scroll to correct sections
 - [ ] Active nav link highlighting works while scrolling
 - [ ] Contact form validates and opens mail client
@@ -539,6 +587,7 @@ eleventyExcludeFromCollections: true
 - [ ] Mobile navbar hamburger toggles and closes on link click
 
 **Visual:**
+
 - [ ] Navbar: dark gradient, teal brand name, white links
 - [ ] Hero: teal gradient, yellow primary CTA, white-border secondary CTA
 - [ ] Sponsor logos: correct sizes (250px / 150px)
@@ -547,6 +596,7 @@ eleventyExcludeFromCollections: true
 - [ ] Responsive: single column on mobile, hamburger menu
 
 **Technical:**
+
 - [ ] No browser console errors
 - [ ] No 404s in Network tab
 - [ ] `npx @11ty/eleventy` completes without warnings
@@ -584,8 +634,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -596,7 +646,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '_site'
+          path: "_site"
 
   deploy:
     environment:
@@ -626,14 +676,14 @@ Create a Pull Request, merge to `main`. The GitHub Actions workflow builds and d
 
 ## Section 3: Risk Analysis
 
-| Risk | Likelihood | Impact | Mitigation |
-|------|-----------|--------|------------|
-| **Johnson Matthey filename** (space) | High | Broken image | Match exact filename in data file |
-| **Asset path changes** | Medium | 404 errors | Use `addPassthroughCopy` for `assets/`, `css/`, `js/` at root |
-| **Section ID changes** | Low | Broken nav | Preserve all IDs unchanged |
-| **GitHub Pages deploy** | Medium | Site not updating | Requires GitHub Actions workflow |
-| **Node.js version mismatch** | Low | Build failure | Pin Node.js version in GitHub Actions + `.nvmrc` |
-| **Nunjucks syntax** | Low | Template errors | Nunjucks uses `loop.index`, `or` for fallback values, etc. |
+| Risk                                 | Likelihood | Impact            | Mitigation                                                    |
+| ------------------------------------ | ---------- | ----------------- | ------------------------------------------------------------- |
+| **Johnson Matthey filename** (space) | High       | Broken image      | Match exact filename in data file                             |
+| **Asset path changes**               | Medium     | 404 errors        | Use `addPassthroughCopy` for `assets/`, `css/`, `js/` at root |
+| **Section ID changes**               | Low        | Broken nav        | Preserve all IDs unchanged                                    |
+| **GitHub Pages deploy**              | Medium     | Site not updating | Requires GitHub Actions workflow                              |
+| **Node.js version mismatch**         | Low        | Build failure     | Pin Node.js version in GitHub Actions + `.nvmrc`              |
+| **Nunjucks syntax**                  | Low        | Template errors   | Nunjucks uses `loop.index`, `or` for fallback values, etc.    |
 
 ### Rollback Plan
 
