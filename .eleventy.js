@@ -26,7 +26,7 @@ module.exports = function (eleventyConfig) {
       includes: "_includes", // Relative to input dir: src/_includes/
       layouts: "_layouts", // Relative to input dir: src/_layouts/
       data: "_data", // Relative to input dir: src/_data/
-      output: "_site", // Build output directory
+      output: "docs", // Build output directory
     },
   };
 };
