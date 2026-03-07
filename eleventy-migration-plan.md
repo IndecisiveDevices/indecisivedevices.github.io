@@ -335,11 +335,11 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 
 ---
 
-### Phase 2: Data-Driven Content
+### ✅ Phase 2: Data-Driven Content
 
 **Goal:** Move sponsors and robots into data files for easier maintenance.
 
-#### 2.1 Create `src/_data/sponsors.json`
+#### ✅ 2.1 Create `src/_data/sponsors.json`
 
 ```json
 [
@@ -366,7 +366,7 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 
 > **Filename with space:** The Johnson Matthey `logo` value must include the space. This is a high break risk.
 
-#### 2.2 Update `src/_includes/sponsors.njk` (data-driven)
+#### ✅ 2.2 Update `src/_includes/sponsors.njk` (data-driven)
 
 ```html
 <section id="sponsors" class="sponsors-section py-5">
@@ -420,7 +420,7 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 > - `{% for sponsor in sponsors %}` — data file name becomes the variable directly.
 > - `{{ loop.index * 100 }}` — Nunjucks uses `loop.index` and supports inline math.
 
-#### 2.3 Create `src/_data/robots.json`
+#### ✅ 2.3 Create `src/_data/robots.json`
 
 ```json
 {
@@ -468,7 +468,7 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 
 > **Real data, not placeholders.** The actual `index.html` has real robot specs (Mecanum drive, 8 motors, etc.).
 
-#### 2.4 Update `src/_includes/robots.njk` (data-driven)
+#### ✅ 2.4 Update `src/_includes/robots.njk` (data-driven)
 
 ```html
 <section id="robots" class="robots-section py-5">
@@ -524,15 +524,15 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 
 > **Cleaner data access:** Eleventy's data cascade makes global data accessible directly by filename (e.g., `robots.current.image`).
 
-#### 2.5 Test Phase 2
+#### ✅ 2.5 Test Phase 2
 
-- [ ] All sponsor logos render correctly with links
-- [ ] Johnson Matthey SVG loads (verify the space in filename)
-- [ ] Current robot section shows real specs (Mecanum, 8 motors, etc.)
-- [ ] Past robot cards display correctly (3 cards)
-- [ ] AOS delay animations stagger properly
+- [x] All sponsor logos render correctly with links
+- [x] Johnson Matthey SVG loads (verify the space in filename)
+- [x] Current robot section shows real specs (Mecanum, 8 motors, etc.)
+- [x] Past robot cards display correctly (3 cards)
+- [x] AOS delay animations stagger properly
 
-**Exit criteria:** Data-driven sections render identically to Phase 1.
+**✅ Exit criteria:** Data-driven sections render identically to Phase 1.
 
 ---
 

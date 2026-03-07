@@ -1,0 +1,41 @@
+{
+  "current": {
+    "name": "2025-2026 Season Robot",
+    "season": "2025-2026",
+    "image": "2025-26_bot.jpg",
+    "image_alt": "2025-2026 Robot",
+    "description": "Our flagship robot for the 2025-2026 season, designed and built by our talented team of engineers and mechanics.",
+    "features": [
+      { "label": "Drive System", "value": "Mecanum" },
+      {
+        "label": "Autonomous Capabilities",
+        "value": "Pick up and launch game elements"
+      },
+      { "label": "Manipulators", "value": "Lift Kit and kicker mechanisms" },
+      {
+        "label": "Motor, Servo, and Sensor count",
+        "value": "8 motors, 2 servos, and 3 sensors"
+      }
+    ]
+  },
+  "past": [
+    {
+      "name": "2024-2025 Robot",
+      "image": "logo.png",
+      "image_alt": "2024-2025 Robot",
+      "status": "Coming Soon..."
+    },
+    {
+      "name": "Upcoming Generations",
+      "image": "logo.png",
+      "image_alt": "Robot 2",
+      "status": "Check back for more!"
+    },
+    {
+      "name": "Future Innovations",
+      "image": "logo.png",
+      "image_alt": "Robot 3",
+      "status": "The future is bright!"
+    }
+  ]
+}

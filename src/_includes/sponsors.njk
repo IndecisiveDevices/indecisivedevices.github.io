@@ -9,46 +9,34 @@
       data-aos="fade-up"
       data-aos-delay="100"
     >
-      We are grateful for the support of our amazing sponsors who make our
-      team possible.
+      We are grateful for the support of our amazing sponsors who make our team
+      possible.
     </p>
-
     <div class="sponsor-tier mb-5">
       <div class="row justify-content-center">
-        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+        {% for sponsor in sponsors %}
+        <div
+          class="col-md-4 mb-4"
+          data-aos="fade-up"
+          data-aos-delay="{{ loop.index * 100 }}"
+        >
           <div class="sponsor-logo">
             <a
-              href="https://matthey.com/about-us"
+              href="{{ sponsor.url }}"
               target="_blank"
               rel="noopener noreferrer"
             >
               <img
-                src="/assets/Johnson_Matthey _Logo_blue.svg"
-                width="250px"
-                alt="Johnson Matthey"
+                src="/assets/{{ sponsor.logo }}"
+                width="{{ sponsor.width }}"
+                alt="{{ sponsor.logo_alt }}"
               />
             </a>
           </div>
         </div>
-        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-          <div class="sponsor-logo">
-            <a
-              href="https://acfsearch.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="/assets/acf-search.webp"
-                width="150px"
-                height="auto"
-                alt="ACF Search"
-              />
-            </a>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
-
     <p class="text-center mt-5" data-aos="fade-up">
       <strong>Interested in sponsoring us?</strong>
       <a href="#get-involved" class="highlight-link">Get in touch!</a>
