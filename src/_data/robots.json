@@ -11,7 +11,7 @@
         "label": "Autonomous Capabilities",
         "value": "Pick up and launch game elements"
       },
-      { "label": "Manipulators", "value": "Lift Kit and kicker mechanisms" },
+      { "label": "Manipulators", "value": "Lift Kit, Spindle, and kicker mechanisms" },
       {
         "label": "Motor, Servo, and Sensor count",
         "value": "8 motors, 2 servos, and 3 sensors"
