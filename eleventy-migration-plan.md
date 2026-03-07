@@ -11,7 +11,7 @@
 
 The Indecisive Devices website is a single-page application built with vanilla HTML/CSS/JS, Bootstrap 5, AOS animations, and Google Fonts. The migration to Eleventy is **low-risk** because the site has no backend dependencies, the CSS is self-contained with CSS custom properties, and the JavaScript is entirely client-side.
 
-Eleventy is a simpler, faster, and more flexible static site generator than Jekyll — it runs on Node.js (no Ruby needed), has zero client-side JavaScript by default, and supports multiple templating languages out of the box.
+Eleventy is a simpler, faster, and more flexible static site generator — it runs on Node.js, has zero client-side JavaScript by default, and supports multiple templating languages out of the box.
 
 **Estimated effort:** 2–3 focused sessions (5–8 hours total)  
 **Risk level:** Low (incremental migration with Git branching)  
@@ -74,19 +74,6 @@ Eleventy is a simpler, faster, and more flexible static site generator than Jeky
 **Unchanged (client-side JS):**
 - AOS initialization, Contact form handling (mailto)
 - Smooth scroll navigation, Active nav link highlighting, Scroll-to-top button
-
-### 1.5 Why Eleventy?
-
-| Feature | Jekyll | Eleventy |
-|---------|--------|----------|
-| Runtime | Ruby + Bundler | Node.js (likely already installed) |
-| Build speed | Moderate | Very fast (no Ruby overhead) |
-| Templating | Liquid only | Nunjucks, Liquid, EJS, Handlebars, and more |
-| GitHub Pages | Native (auto-build) | Via GitHub Actions (simple workflow) |
-| Config | `_config.yml` (YAML) | `.eleventy.js` (JavaScript — full control) |
-| Data files | YAML only | JSON, YAML, JS module, or `module.exports` |
-| Learning curve | Low | Low (especially for JS-familiar devs) |
-| Plugin ecosystem | Limited to GitHub Pages whitelist | npm — unlimited |
 
 ---
 
@@ -185,7 +172,7 @@ module.exports = function(eleventyConfig) {
 
 > **Key decision: `src/` input directory.** Unlike Jekyll (which uses the project root), Eleventy best practice is to put source files in a `src/` directory. This cleanly separates source from config, `node_modules`, and build output. The `assets/`, `css/`, and `js/` directories are passed through from the project root, so their URLs remain unchanged.
 
-> **Why Nunjucks?** Nunjucks is the most popular Eleventy templating language. It is similar to Jinja2/Liquid but more powerful (macros, block inheritance, etc.). The Jekyll plan uses Liquid — Nunjucks is a near-identical syntax for this project's needs.
+> **Why Nunjucks?** Nunjucks is the most popular Eleventy templating language. It is powerful (supports macros, block inheritance, etc.) and is very well-suited for this project's needs.
 
 #### 1.2 Create `src/_layouts/default.njk`
 
@@ -235,11 +222,11 @@ module.exports = function(eleventyConfig) {
 </html>
 ```
 
-> **Key differences from Jekyll layout:**
+> **Key Nunjucks details:**
 > - Uses `{{ content | safe }}` instead of `{{ content }}` — Nunjucks requires `| safe` to render raw HTML without escaping.
-> - Uses `{{ title or metadata.title }}` instead of `{{ page.title | default: site.title }}` — Nunjucks uses `or` for defaults, and global data lives in `metadata` (from `_data/metadata.json`).
-> - CSS/JS paths use leading `/` (root-relative) — no `relative_url` filter needed because the site is at the root (`baseurl: ""`).
-> - The `<title>` avoids duplication — same reasoning as the Jekyll plan.
+> - Uses `{{ title or metadata.title }}` — Nunjucks uses `or` for defaults, and global data lives in `metadata` (from `_data/metadata.json`).
+> - CSS/JS paths use leading `/` (root-relative) — no `relative_url` filter needed because the site is at the root.
+> - The `<title>` avoids duplication.
 
 #### 1.3 Create Global Data: `src/_data/metadata.json`
 
@@ -252,7 +239,7 @@ module.exports = function(eleventyConfig) {
 }
 ```
 
-> **Eleventy global data:** Any file in `_data/` is automatically available as a global variable. `metadata.json` becomes `{{ metadata.title }}`, `{{ metadata.url }}`, etc. in all templates. This replaces Jekyll's `_config.yml` site-level variables.
+> **Eleventy global data:** Any file in `_data/` is automatically available as a global variable. `metadata.json` becomes `{{ metadata.title }}`, `{{ metadata.url }}`, etc. in all templates.
 
 #### 1.4 Extract Includes
 
@@ -290,7 +277,7 @@ description: "Indecisive Devices - FIRST Tech Challenge Team"
 {% include "donate.njk" %}
 ```
 
-> **Why `index.njk` not `index.md`?** Content is all HTML includes. Using `.njk` avoids Markdown processing surprises. Same reasoning as the Jekyll plan using `index.html`.
+> **Why `index.njk` not `index.md`?** Content is all HTML includes. Using `.njk` avoids Markdown processing surprises.
 
 > **Why `.njk` not `.html`?** Using `.njk` clearly signals this is a template file processed by Nunjucks. Eleventy will output it as `index.html` in `_site/`.
 
@@ -311,7 +298,7 @@ Project root:
 └── _site/          → build output (gitignored)
 ```
 
-> **Why keep assets at root?** Same rationale as the Jekyll plan: avoid unnecessary path churn. The passthrough copy preserves all URLs.
+> **Why keep assets at root?** This avoids unnecessary path churn. The passthrough copy preserves all URLs.
 
 #### 1.7 Test Phase 1
 
@@ -368,7 +355,7 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 
 > **JSON vs YAML:** Eleventy supports both. JSON is used here because it is native to the Node.js ecosystem and avoids YAML indentation pitfalls. You may use YAML (`sponsors.yaml`) if you prefer — Eleventy handles both identically.
 
-> **Filename with space:** The Johnson Matthey `logo` value must include the space. This is the #1 break risk (same as the Jekyll plan).
+> **Filename with space:** The Johnson Matthey `logo` value must include the space. This is a high break risk.
 
 #### 2.2 Update `src/_includes/sponsors.njk` (data-driven)
 
@@ -401,9 +388,9 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 </section>
 ```
 
-> **Key Nunjucks differences from Liquid (Jekyll):**
-> - `{% for sponsor in sponsors %}` — data file name becomes the variable directly (no `site.data.` prefix).
-> - `{{ loop.index * 100 }}` — Nunjucks uses `loop.index` instead of `forloop.index`, and supports inline math (no `| times: 100` filter needed).
+> **Key Nunjucks features:**
+> - `{% for sponsor in sponsors %}` — data file name becomes the variable directly.
+> - `{{ loop.index * 100 }}` — Nunjucks uses `loop.index` and supports inline math.
 
 #### 2.3 Create `src/_data/robots.json`
 
@@ -445,7 +432,7 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 }
 ```
 
-> **Real data, not placeholders.** Same correction as the Jekyll plan — the actual `index.html` has real robot specs (Mecanum drive, 8 motors, etc.).
+> **Real data, not placeholders.** The actual `index.html` has real robot specs (Mecanum drive, 8 motors, etc.).
 
 #### 2.4 Update `src/_includes/robots.njk` (data-driven)
 
@@ -489,7 +476,7 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 </section>
 ```
 
-> **Cleaner data access:** `robots.current.image` vs Jekyll's `site.data.robots.current.image` — Eleventy's data cascade makes global data accessible directly by filename.
+> **Cleaner data access:** Eleventy's data cascade makes global data accessible directly by filename (e.g., `robots.current.image`).
 
 #### 2.5 Test Phase 2
 
@@ -505,36 +492,9 @@ This starts a dev server with live reload (BrowserSync built-in) at `localhost:8
 
 ### Phase 3: Polish, SEO, and Deployment
 
-#### 3.1 SEO: Add an Eleventy SEO Plugin or Manual Meta Tags
+#### 3.1 SEO: Manual Meta Tags
 
-Unlike Jekyll's `jekyll-seo-tag` plugin, Eleventy does not include an official SEO plugin. You have two options:
-
-**Option A: Manual meta tags (recommended for this site)**
-
-The layout already includes `<title>`, `<meta description>`, and `<meta author>`. For a single-page site, this is sufficient.
-
-**Option B: Install `eleventy-plugin-seo`**
-
-```bash
-npm install --save-dev eleventy-plugin-seo
-```
-
-Update `.eleventy.js`:
-```js
-const pluginSEO = require("eleventy-plugin-seo");
-
-module.exports = function(eleventyConfig) {
-  eleventyConfig.addPlugin(pluginSEO, {
-    title: "Indecisive Devices",
-    description: "Indecisive Devices - FIRST Tech Challenge Team",
-    url: "https://indecisivedevices.github.io",
-    author: "Indecisive Devices"
-  });
-  // ... rest of config
-};
-```
-
-> **Recommendation:** Use Option A. The site is a single page, and the manual meta tags are already in the layout. Adding a plugin for one page is overkill.
+Eleventy gives you full control over your layout templates. The layout already includes `<title>`, `<meta description>`, and `<meta author>`. For a single-page site like this, manual meta tags in the `<head>` of your layout are sufficient and highly recommended. No extra plugins are necessary.
 
 #### 3.2 Generate a Sitemap
 
@@ -593,7 +553,7 @@ eleventyExcludeFromCollections: true
 
 #### 3.5 Deploy via GitHub Actions
 
-> **Critical difference from Jekyll:** GitHub Pages does **not** natively build Eleventy sites (only Jekyll). You must use a GitHub Actions workflow to build and deploy.
+> **Deployment note:** GitHub Pages does **not** natively build Eleventy sites. You must use a GitHub Actions workflow to build and deploy.
 
 Create `.github/workflows/deploy.yml`:
 
@@ -671,9 +631,9 @@ Create a Pull Request, merge to `main`. The GitHub Actions workflow builds and d
 | **Johnson Matthey filename** (space) | High | Broken image | Match exact filename in data file |
 | **Asset path changes** | Medium | 404 errors | Use `addPassthroughCopy` for `assets/`, `css/`, `js/` at root |
 | **Section ID changes** | Low | Broken nav | Preserve all IDs unchanged |
-| **GitHub Pages deploy** | Medium | Site not updating | Requires GitHub Actions workflow (not native like Jekyll) |
+| **GitHub Pages deploy** | Medium | Site not updating | Requires GitHub Actions workflow |
 | **Node.js version mismatch** | Low | Build failure | Pin Node.js version in GitHub Actions + `.nvmrc` |
-| **Nunjucks vs Liquid syntax** | Low | Template errors | Nunjucks is similar but uses `loop.index` instead of `forloop.index`, `or` instead of `| default:`, etc. |
+| **Nunjucks syntax** | Low | Template errors | Nunjucks uses `loop.index`, `or` for fallback values, etc. |
 
 ### Rollback Plan
 
@@ -720,51 +680,9 @@ indecisivedevices.github.io/
 └── .gitignore                  # Updated with Eleventy entries
 ```
 
-> **vs Jekyll structure:** The main difference is the `src/` input directory pattern. All template files live inside `src/`, while static assets remain at the project root. The `_site/` output mirrors the same URL structure.
+> **Structure note:** All template files live inside `src/`, while static assets remain at the project root. The `_site/` output mirrors the same URL structure.
 
----
-
-## Section 5: Comparison with Jekyll Migration Plan
-
-| Topic | Jekyll Plan | This Eleventy Plan | Notes |
-|-------|------------|-------------------|-------|
-| **Runtime** | Ruby + Bundler | Node.js + npm | Eleventy — no Ruby install needed |
-| **Setup time** | Includes `gem install` | `npm install` | Eleventy — faster, likely pre-existing runtime |
-| **Config file** | `_config.yml` (YAML) | `.eleventy.js` (JavaScript) | Eleventy — more flexible, programmable |
-| **Template engine** | Liquid | Nunjucks | Both similar syntax; Nunjucks more powerful |
-| **Template extension** | `.html` | `.njk` | Convention difference only |
-| **Data files** | YAML only | JSON (or YAML) | Eleventy — native JSON support |
-| **Data access** | `site.data.sponsors` | `sponsors` | Eleventy — shorter, cleaner references |
-| **Loop index** | `forloop.index` | `loop.index` | Nunjucks syntax |
-| **Default values** | `\| default: "fallback"` | `or "fallback"` | Nunjucks syntax |
-| **HTML escaping** | Auto-safe for `{{ content }}` | Requires `\| safe` filter | Important Eleventy gotcha |
-| **Asset URLs** | `\| relative_url` filter | Root-relative (`/assets/...`) | Both work; no `baseurl` needed |
-| **Index file** | `index.html` (at root) | `index.njk` (in `src/`) | Same output: `_site/index.html` |
-| **Plugins** | Limited to GitHub Pages whitelist | Unlimited (npm) | Eleventy — no restrictions |
-| **SEO** | `jekyll-seo-tag` plugin | Manual meta tags or npm plugin | Both adequate |
-| **Sitemap** | `jekyll-sitemap` plugin | Manual template or npm plugin | Both adequate |
-| **GitHub Pages deploy** | Native (auto-build) | GitHub Actions workflow required | Jekyll — simpler deploy (no extra config) |
-| **Build speed** | Moderate | Very fast | Eleventy — noticeably faster |
-| **Dev server** | `bundle exec jekyll serve` | `npx @11ty/eleventy --serve` | Both with live reload |
-| **Directory structure** | Root-level source | `src/` directory pattern | Eleventy — cleaner separation |
-| **Future blog** | Built-in `_posts/` | Collections (`_posts/` or custom) | Both support blogs |
-
-### Key Trade-offs
-
-| Advantage | Jekyll | Eleventy |
-|-----------|--------|----------|
-| **Zero-config GitHub Pages** | ✅ Native support | ❌ Requires GitHub Actions |
-| **No Ruby dependency** | ❌ Requires Ruby + Bundler | ✅ Node.js only |
-| **Build speed** | ❌ Moderate | ✅ Very fast |
-| **Plugin freedom** | ❌ GitHub Pages whitelist | ✅ Any npm package |
-| **Template power** | ❌ Liquid only | ✅ Multiple engines |
-| **Data file formats** | ❌ YAML only | ✅ JSON, YAML, JS |
-| **Community/docs** | ✅ Mature, extensive | ✅ Growing, excellent docs |
-| **Familiarity (team)** | Depends | Likely higher (JS/Node.js) |
-
----
-
-## Section 6: Future Enhancements (Post-Migration)
+## Section 5: Future Enhancements (Post-Migration)
 
 1. **Blog system** — Eleventy collections with `src/posts/` directory
 2. **SCSS/PostCSS** — Add `eleventy-plugin-sass` or PostCSS for CSS preprocessing
@@ -777,4 +695,4 @@ indecisivedevices.github.io/
 9. **RSS feed** — `@11ty/eleventy-plugin-rss` for blog posts
 10. **Incremental builds** — Eleventy supports incremental builds for faster development
 
-> **Eleventy-specific advantage:** The `@11ty/eleventy-img` plugin can automatically optimize the large images (`logo.png` at 1.9MB, `2025-26_bot.jpg` at 1.2MB) during the build — generating responsive sizes and modern formats (WebP/AVIF) without manual work. This is not easily achievable with Jekyll on GitHub Pages.
+> **Eleventy advantage:** The `@11ty/eleventy-img` plugin can automatically optimize the large images (`logo.png` at 1.9MB, `2025-26_bot.jpg` at 1.2MB) during the build — generating responsive sizes and modern formats (WebP/AVIF) without manual work.
