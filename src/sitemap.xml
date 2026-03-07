@@ -6,6 +6,6 @@ eleventyExcludeFromCollections: true
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>{{ metadata.url }}/</loc>
-    <lastmod>{{ page.date | dateToFormat("yyyy-MM-dd") }}</lastmod>
+    <lastmod>{{ page.date | dateToFormat: "yyyy-MM-dd" }}</lastmod>
   </url>
 </urlset>

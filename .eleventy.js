@@ -16,10 +16,10 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addWatchTarget("js/");
 
   return {
-    // Use Nunjucks as the templating engine for .html files
-    markdownTemplateEngine: "njk",
-    htmlTemplateEngine: "njk",
-    dataTemplateEngine: "njk",
+    // Use Liquid as the templating engine for .html files
+    markdownTemplateEngine: "liquid",
+    htmlTemplateEngine: "liquid",
+    dataTemplateEngine: "liquid",
 
     dir: {
       input: "src", // Source directory
