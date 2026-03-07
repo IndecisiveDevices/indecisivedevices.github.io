@@ -1,4 +1,11 @@
+const { DateTime } = require("luxon");
+
 module.exports = function (eleventyConfig) {
+  // Custom filter: format a date using Luxon (e.g. for sitemap.njk)
+  eleventyConfig.addFilter("dateToFormat", (date, format) => {
+    return DateTime.fromJSDate(date, { zone: "utc" }).toFormat(format);
+  });
+
   // Pass through static assets (copy as-is to _site/)
   eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy("css");
