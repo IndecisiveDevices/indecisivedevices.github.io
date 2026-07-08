@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mad Botters Payment Portal Report · July 2026</title>
+<style>
+:root{
+  --void:#030611; --ink:#f4fbff; --dim:#a8b7c9; --muted:#738196;
+  --cyan:#49f5ff; --teal:#33ffd2; --pink:#ff3bbd; --violet:#8b5cff; --amber:#ffce59; --danger:#ff5470; --good:#89ff7a;
+  --glass:rgba(10,18,34,.68); --line:rgba(130,245,255,.23); --line2:rgba(255,255,255,.10);
+  --stripe:#9172ff; --cheddar:#ffad2f; --square:#52d8ff; --paypal:#5ca8ff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#030611;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:-10%;z-index:-4;background:radial-gradient(circle at 20% 8%,rgba(73,245,255,.23),transparent 27%),radial-gradient(circle at 76% 12%,rgba(255,59,189,.20),transparent 24%),radial-gradient(circle at 50% 90%,rgba(139,92,255,.16),transparent 35%),linear-gradient(180deg,#030611,#071126 55%,#030611)}
+body:after{content:"";position:fixed;inset:0;z-index:-3;background-image:linear-gradient(rgba(73,245,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(73,245,255,.06) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(circle at 50% 20%,#000 0 38%,transparent 75%);animation:gridDrift 18s linear infinite;pointer-events:none}
+@keyframes gridDrift{to{background-position:64px 64px}}
+@keyframes pulse{50%{filter:drop-shadow(0 0 26px rgba(73,245,255,.75));transform:translateY(-4px)}}
+@keyframes floaty{50%{transform:translateY(-10px) rotate(-1deg)}}
+@keyframes ticker{to{transform:translateX(-50%)}}
+a{color:var(--teal)}
+.wrap{max-width:1320px;margin:auto;padding:22px 18px 70px}.topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(20px);background:linear-gradient(90deg,rgba(3,6,17,.90),rgba(11,15,38,.74));border-bottom:1px solid var(--line)}
+.nav{max-width:1320px;margin:auto;display:flex;align-items:center;gap:10px;overflow:auto;padding:10px 18px}.nav b{white-space:nowrap;color:#c8fbff;margin-right:8px}.nav a{white-space:nowrap;text-decoration:none;color:var(--ink);font-weight:800;font-size:13px;padding:9px 12px;border:1px solid rgba(73,245,255,.25);border-radius:999px;background:rgba(255,255,255,.045);transition:.18s}.nav a:hover{transform:translateY(-2px);border-color:var(--pink);box-shadow:0 0 24px rgba(255,59,189,.22)}
+.hero{min-height:680px;display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center;position:relative}.heroText{padding:48px 0}.eyebrow{display:inline-flex;gap:10px;align-items:center;border:1px solid rgba(73,245,255,.35);background:rgba(73,245,255,.08);border-radius:999px;padding:9px 13px;text-transform:uppercase;letter-spacing:.13em;font-weight:950;font-size:12px;color:#dffcff}.title{font-size:clamp(42px,7.5vw,106px);line-height:.86;margin:22px 0 14px;letter-spacing:-.08em;font-weight:1000}.title .neon{background:linear-gradient(95deg,var(--teal),var(--cyan) 38%,var(--pink) 72%,var(--amber));-webkit-background-clip:text;color:transparent;text-shadow:0 0 28px rgba(73,245,255,.20)}.subtitle{max-width:780px;font-size:clamp(17px,2.3vw,24px);line-height:1.42;color:#bed0df}.choiceRail{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}.railCard{min-width:170px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(13,25,48,.70),rgba(5,9,22,.55));border-radius:22px;padding:16px;transition:.22s;position:relative;overflow:hidden}.railCard:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(73,245,255,.12),transparent);transform:translateX(-120%)}.railCard:hover{transform:translateY(-6px) rotate(-.8deg);border-color:var(--teal);box-shadow:0 16px 60px rgba(0,0,0,.35)}.railCard:hover:before{transform:translateX(120%);transition:.8s}.railCard strong{display:block;font-size:25px}.railCard small{color:var(--dim)}
+.hatterStage{position:relative;min-height:560px;border:1px solid rgba(73,245,255,.20);border-radius:42px;background:radial-gradient(circle at 50% 20%,rgba(73,245,255,.14),transparent 33%),linear-gradient(180deg,rgba(13,20,46,.55),rgba(4,7,19,.55));box-shadow:inset 0 0 80px rgba(73,245,255,.06),0 30px 110px rgba(0,0,0,.45);overflow:hidden}.hatterStage:after{content:"";position:absolute;left:5%;right:5%;bottom:74px;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),var(--pink),transparent);box-shadow:0 0 28px var(--cyan)}
+.hat{position:absolute;left:50%;top:40%;width:390px;height:260px;transform:translate(-50%,-50%);animation:floaty 5s ease-in-out infinite}.hat .crown{position:absolute;left:72px;top:14px;width:246px;height:190px;border:4px solid var(--cyan);border-bottom:none;border-radius:32px 32px 16px 16px;background:linear-gradient(135deg,rgba(73,245,255,.11),rgba(255,59,189,.08));box-shadow:0 0 30px rgba(73,245,255,.25),inset 0 0 34px rgba(73,245,255,.12)}.hat .band{position:absolute;left:65px;top:132px;width:260px;height:62px;background:linear-gradient(90deg,rgba(255,59,189,.32),rgba(73,245,255,.14));border:3px solid var(--pink);box-shadow:0 0 22px rgba(255,59,189,.36)}.hat .brim{position:absolute;left:14px;top:188px;width:360px;height:70px;border:4px solid var(--teal);border-radius:50%;background:rgba(51,255,210,.06);box-shadow:0 0 34px rgba(51,255,210,.33)}.hat .card{position:absolute;right:45px;top:54px;width:78px;height:72px;border:3px solid var(--amber);background:rgba(255,206,89,.12);transform:rotate(10deg);border-radius:12px;display:grid;place-items:center;font-weight:1000;color:#fff0b7;box-shadow:0 0 22px rgba(255,206,89,.35);font-size:18px;line-height:1}.eye{position:absolute;top:148px;width:38px;height:38px;border:3px solid var(--cyan);border-radius:50%;background:rgba(73,245,255,.12);box-shadow:0 0 18px rgba(73,245,255,.45)}.eye.one{left:140px}.eye.two{right:140px;border-radius:9px;border-color:var(--pink);animation:pulse 2.6s infinite}.spark{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan);opacity:.9}.s1{left:13%;top:22%;animation:floaty 7s infinite}.s2{left:78%;top:26%;animation:floaty 6s infinite reverse}.s3{left:67%;top:67%;animation:floaty 8s infinite}.scrollCue{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#d4fdff;font-weight:900;font-size:13px;letter-spacing:.12em;text-transform:uppercase}.ticker{position:relative;overflow:hidden;border-block:1px solid rgba(73,245,255,.25);background:rgba(73,245,255,.055);margin:10px -18px 28px}.ticker span{display:inline-block;white-space:nowrap;padding:12px 0;color:#d5fbff;font-weight:900;animation:ticker 34s linear infinite}.ticker b{color:var(--amber)}
+.panel{border:1px solid var(--line);background:linear-gradient(180deg,rgba(12,22,43,.72),rgba(7,11,28,.72));border-radius:34px;padding:28px;box-shadow:0 22px 80px rgba(0,0,0,.28);margin:26px 0;position:relative;overflow:hidden}.panel:before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(73,245,255,.08),transparent 33%,rgba(255,59,189,.07));pointer-events:none}.panel>*{position:relative}h2{font-size:clamp(28px,4vw,48px);letter-spacing:-.045em;margin:0 0 12px}.lead{color:#bed0df;font-size:17px;line-height:1.56}.oracle{display:grid;grid-template-columns:.85fr 1.15fr;gap:20px}.verdict{min-height:360px;border:1px solid rgba(51,255,210,.28);border-radius:30px;padding:24px;background:radial-gradient(circle at 20% 0%,rgba(51,255,210,.15),transparent 38%),rgba(5,11,27,.55)}.verdict .stamp{display:inline-flex;padding:7px 11px;border-radius:999px;background:rgba(51,255,210,.13);border:1px solid rgba(51,255,210,.36);font-weight:1000;color:#d6fff7}.verdict h3{font-size:38px;letter-spacing:-.05em;margin:16px 0 8px}.path{display:grid;gap:12px}.pathStep{display:grid;grid-template-columns:54px 1fr;gap:14px;align-items:start;border:1px solid var(--line2);border-radius:22px;padding:15px;background:rgba(255,255,255,.04);transition:.18s}.pathStep:hover{transform:translateX(7px);border-color:var(--pink);background:rgba(255,59,189,.06)}.num{width:42px;height:42px;display:grid;place-items:center;border-radius:15px;background:rgba(73,245,255,.12);border:1px solid rgba(73,245,255,.35);font-weight:1000;color:#e0feff}.pathStep b{font-size:18px}.pathStep p{margin:.25rem 0 0;color:var(--dim);line-height:1.35}
+.spiral{display:grid;grid-template-columns:280px 1fr;gap:22px;align-items:start}.processorWheel{position:sticky;top:72px;border:1px solid var(--line);border-radius:30px;padding:16px;background:rgba(5,9,22,.66)}.processorWheel button{width:100%;margin:6px 0;text-align:left;border:1px solid var(--line2);background:rgba(255,255,255,.04);border-radius:18px;padding:13px 14px;color:var(--ink);font-weight:1000;cursor:pointer;transition:.18s}.processorWheel button:hover,.processorWheel button.active{border-color:var(--teal);transform:translateX(4px);box-shadow:0 0 24px rgba(73,245,255,.14)}.processorRoom{display:none;min-height:430px;border:1px solid var(--line2);border-radius:32px;padding:26px;background:linear-gradient(140deg,rgba(255,255,255,.04),rgba(255,255,255,.015))}.processorRoom.active{display:block;animation:roomIn .32s ease-out}@keyframes roomIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}.roomTitle{font-size:44px;letter-spacing:-.05em;margin:0}.chips{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0 20px}.chip{border:1px solid var(--line2);background:rgba(255,255,255,.05);border-radius:999px;padding:7px 10px;font-weight:900;color:#dff9ff}.proscons{display:grid;grid-template-columns:1fr 1fr;gap:14px}.scrollbox{max-height:560px;overflow:auto;border:1px solid var(--line);border-radius:28px;background:rgba(4,8,21,.60)}table{border-collapse:separate;border-spacing:0;width:100%;min-width:980px}th,td{padding:14px 13px;border-bottom:1px solid var(--line2);vertical-align:top}th{position:sticky;top:0;background:linear-gradient(180deg,rgba(7,18,38,.98),rgba(4,9,22,.98));z-index:2;color:#e9fdff;text-transform:uppercase;font-size:12px;letter-spacing:.12em}td:first-child{font-weight:1000;color:#fff;min-width:270px}.mark{display:inline-flex;gap:6px;align-items:center;border-radius:999px;padding:6px 9px;font-weight:1000;font-size:12px;white-space:nowrap}.yes{background:rgba(137,255,122,.13);border:1px solid rgba(137,255,122,.38);color:#d7ffd1}.maybe{background:rgba(255,206,89,.14);border:1px solid rgba(255,206,89,.40);color:#fff0b8}.no{background:rgba(255,84,112,.13);border:1px solid rgba(255,84,112,.38);color:#ffd0d8}.best{background:rgba(73,245,255,.14);border:1px solid rgba(73,245,255,.42);color:#d6fdff}.note{margin-top:6px;color:#91a1b6;font-size:13px;line-height:1.35}.tableRowHover tbody tr{transition:.15s}.tableRowHover tbody tr:hover{background:rgba(73,245,255,.06)}
+.lab{display:grid;grid-template-columns:360px 1fr;gap:22px}.dials{display:grid;gap:12px}.dial{border:1px solid var(--line2);border-radius:22px;padding:15px;background:rgba(255,255,255,.04)}.dial label{display:flex;justify-content:space-between;font-weight:950;margin-bottom:8px}.dial span{color:#dfffff}input[type=range]{width:100%;accent-color:var(--cyan)}.toggleRow{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}.toggle{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:999px;padding:9px 12px;background:rgba(255,255,255,.045);font-weight:950;cursor:pointer}.toggle input{accent-color:var(--teal)}.canvasWrap{position:relative;border:1px solid var(--line);border-radius:30px;padding:12px;background:radial-gradient(circle at 20% 0%,rgba(73,245,255,.08),transparent 28%),rgba(2,7,19,.55)}canvas{width:100%;height:360px}.chartGrid{display:grid;gap:16px}.costTable{margin-top:16px}.pillrow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}.pillStat{border:1px solid var(--line2);border-radius:20px;padding:14px;background:rgba(255,255,255,.04)}.pillStat b{display:block;font-size:24px}.pillStat small{color:var(--dim)}
+details{border:1px solid var(--line2);border-radius:22px;background:rgba(255,255,255,.035);padding:15px;margin:10px 0}summary{font-weight:1000;cursor:pointer}.sources{font-size:13px;color:#aebbd4;line-height:1.5}.sources li{margin-bottom:9px}.footer{text-align:center;color:#8fa2b7;padding:28px}.printHint{font-size:12px;color:#94a7b9;margin-top:10px}
+@media(max-width:980px){.hero,.oracle,.spiral,.lab,.proscons{grid-template-columns:1fr}.hatterStage{min-height:440px}.hat{transform:translate(-50%,-50%) scale(.78)}.processorWheel{position:relative;top:auto}.pillrow{grid-template-columns:1fr 1fr}.panel{padding:20px}}
+@media(max-width:620px){.railCard{min-width:100%}.pillrow{grid-template-columns:1fr}.title{font-size:52px}.nav b{display:none}}
+@media print{.topbar,.ticker,.processorWheel,.dials,.toggleRow{display:none}body:before,body:after{display:none}body{background:#fff;color:#111}.panel,.hatterStage,.verdict,.processorRoom,.scrollbox,.canvasWrap{box-shadow:none;background:#fff;color:#111;border-color:#ddd}.lead,.note,.sources,.footer{color:#333}.processorRoom{display:block}.hero{min-height:auto}}
+</style>
+</head>
+<body>
+<div class="topbar"><nav class="nav"><b>🎩 22738</b><a href="#doorway">Doorway</a><a href="#verdict">Verdict</a><a href="#rooms">Processor Rooms</a><a href="#matrix">Feature Oracle</a><a href="#costs">Cost Lab</a><a href="#risks">Risks</a><a href="#sources">Sources</a></nav></div>
+<div class="wrap">
+<header class="hero" id="doorway">
+  <div class="heroText">
+    <div class="eyebrow">Mad Hatter × Tron · FTC team payment analysis · July 2026</div>
+    <h1 class="title">The <span class="neon">Money<br>Wondergrid</span></h1>
+    <p class="subtitle">A decision report for collecting $300 student dues, sponsor support, and occasional fundraising money without turning your robotics team into a tiny online store wearing a fake mustache.</p>
+    <div class="choiceRail">
+      <div class="railCard"><strong>$3.6k–$4.5k</strong><small>expected dues before sponsors</small></div>
+      <div class="railCard"><strong>12–15</strong><small>students modeled</small></div>
+      <div class="railCard"><strong>4</strong><small>top processors compared</small></div>
+      <div class="railCard"><strong>0</strong><small>assumed tax-deductible status</small></div>
+    </div>
+  </div>
+  <div class="hatterStage" aria-label="2D neon Mad Hatter robotics illustration">
+    <div class="spark s1"></div><div class="spark s2"></div><div class="spark s3"></div>
+    <div class="hat"><div class="crown"></div><div class="band"></div><div class="brim"></div><div class="card">22<br>738</div><div class="eye one"></div><div class="eye two"></div></div>
+    <div class="scrollCue">Scroll the rabbit circuit ↓</div>
+  </div>
+</header>
+<div class="ticker"><span>⚡ Stripe for low-friction links · <b>Cheddar Up for parent-ops collections</b> · Square for event tables · PayPal as the familiar fallback · Do not promise tax deductibility unless qualified · ⚡ Stripe for low-friction links · <b>Cheddar Up for parent-ops collections</b> · Square for event tables · PayPal as the familiar fallback · </span></div>
+
+<section class="panel oracle" id="verdict">
+  <div class="verdict">
+    <span class="stamp">Recommended default</span>
+    <h3>Stripe first.<br>Cheddar Up if parent workflow matters more.</h3>
+    <p class="lead">For your described volume, Stripe Payment Links is the cleanest baseline: no monthly fee, low card-link pricing, easy website buttons, QR codes, and professional sponsor checkout. Cheddar Up becomes the better operational tool when the coach wants registration fields, cash/check tracking, signups, waivers, and parent-facing collection pages.</p>
+  </div>
+  <div class="path">
+    <div class="pathStep"><div class="num">1</div><div><b>Use clear buckets</b><p>Create separate collections or links for “Team Dues,” “Sponsor Support,” and “Robot Parts Fundraiser.” This keeps bookkeeping from becoming a confetti cannon.</p></div></div>
+    <div class="pathStep"><div class="num">2</div><div><b>Do not call it tax-deductible</b><p>Safer wording: “Support our FTC robotics team” or “Sponsor the Mad Botters.” Larger companies may still require a nonprofit or school channel.</p></div></div>
+    <div class="pathStep"><div class="num">3</div><div><b>Decide whether parents pay processing fees</b><p>Absorbing fees is cleaner. Passing fees protects budget. Either way, write the policy before payment links go live.</p></div></div>
+    <div class="pathStep"><div class="num">4</div><div><b>Keep two adult admins</b><p>Do not run payments through one person’s personal login or bank account. Unique logins and shared visibility matter more than a fancy checkout button.</p></div></div>
+  </div>
+</section>
+
+<section class="panel" id="rooms">
+  <h2>Processor rooms</h2>
+  <p class="lead">Pick a door. Each room gives you the practical flavor: where it shines, where it bites, and when I’d use it for a small FTC team.</p>
+  <div class="spiral">
+    <div class="processorWheel" id="roomButtons"></div>
+    <div id="roomContent"></div>
+  </div>
+</section>
+
+<section class="panel" id="matrix">
+  <h2>The Feature Oracle</h2>
+  <p class="lead">A scrollable comparison matrix with sticky headings. Hover rows to make the machine hum.</p>
+  <p><span class="mark best">🚀 Best fit</span> <span class="mark yes">🟢 Strong</span> <span class="mark maybe">🟡 Conditional</span> <span class="mark no">🔴 Weak</span></p>
+  <div class="scrollbox tableRowHover"><table><thead><tr><th>Feature / decision point</th><th>Stripe Payment Links</th><th>Cheddar Up</th><th>Square Payment Links</th><th>PayPal</th></tr></thead><tbody id="featureRows"></tbody></table></div>
+</section>
+
+<section class="panel" id="costs">
+  <h2>The Cost Lab</h2>
+  <p class="lead">Drag the knobs. Toggle processors. The model assumes the team absorbs processing fees. Cheddar Up fee pass-through can reduce team cost, but families or sponsors see the surcharge at checkout.</p>
+  <div class="lab">
+    <div>
+      <div class="dials">
+        <div class="dial"><label>Students <span id="studentsVal"></span></label><input id="students" type="range" min="12" max="15" value="15"></div>
+        <div class="dial"><label>Dues per student <span id="duesVal"></span></label><input id="dues" type="range" min="200" max="500" step="25" value="300"></div>
+        <div class="dial"><label>Sponsors <span id="sponsorsVal"></span></label><input id="sponsors" type="range" min="0" max="12" value="5"></div>
+        <div class="dial"><label>Avg sponsor payment <span id="sponsorAvgVal"></span></label><input id="sponsorAvg" type="range" min="100" max="1000" step="50" value="250"></div>
+        <div class="dial"><label>Fundraiser transactions <span id="fundTxVal"></span></label><input id="fundTx" type="range" min="0" max="80" step="5" value="20"></div>
+        <div class="dial"><label>Avg fundraiser payment <span id="fundAvgVal"></span></label><input id="fundAvg" type="range" min="10" max="150" step="5" value="50"></div>
+      </div>
+      <div class="pillrow" id="quickNumbers"></div>
+    </div>
+    <div class="chartGrid">
+      <div class="toggleRow" id="toggles"></div>
+      <div class="canvasWrap"><canvas id="lineChart" width="980" height="420"></canvas></div>
+      <div class="canvasWrap"><canvas id="barChart" width="980" height="420"></canvas></div>
+    </div>
+  </div>
+  <div class="scrollbox costTable"><table><thead><tr><th>Scenario</th><th>Total collected</th><th>Transactions</th><th>Estimated fees</th><th>Net to team</th><th>Effective rate</th></tr></thead><tbody id="costRows"></tbody></table></div>
+</section>
+
+<section class="panel" id="risks">
+  <h2>Risk cabinet</h2>
+  <details open><summary>Bank and account ownership</summary><p class="lead">Use the real team bank account where possible. Keep at least two adult administrators with unique logins. Shared master logins are not a system; they are a haunted shoebox.</p></details>
+  <details><summary>Refunds and chargebacks</summary><p class="lead">Publish a dues/refund policy before collecting money. For example, spell out whether dues are refundable after registration fees, parts, shirts, or FTC expenses have been paid.</p></details>
+  <details><summary>Sponsor language</summary><p class="lead">Use “support,” “sponsorship,” or “contribution.” Do not imply tax deductibility without a qualified entity. You can still offer recognition benefits such as logos on the website, shirts, robot pit signage, or sponsor slides.</p></details>
+  <details><summary>Fee pass-through</summary><p class="lead">Passing fees to payers protects your budget, but some families dislike surprise add-ons. If used, state it plainly before checkout.</p></details>
+</section>
+
+<section class="panel" id="sources">
+  <h2>Source cabinet</h2>
+  <ol class="sources">
+    <li>Stripe pricing and Payment Links documentation: 2.9% + $0.30 domestic card model, shareable payment links, QR codes, and embeddable buy buttons. Sources: Stripe pricing, Stripe Payment Links, Stripe buy button docs.</li>
+    <li>Cheddar Up pricing/fee documents: Basic card fee modeled as 3.95% + $0.95; Pro/Team card fee modeled as 3.59% + $0.59; Team ACH/eCheck modeled as flat $0.95 plus Team monthly plan. Sources: Cheddar Up pricing, support docs, fees blog, Team plan page.</li>
+    <li>Square Payment Links and Square fees: no monthly fee for payment links; online payment link/e-commerce fee modeled as 3.3% + $0.30. Sources: Square Payment Links, Square fees, Square buy buttons.</li>
+    <li>PayPal merchant fees: payment links / standard card model represented as 2.99% + $0.49 for the comparison. Source: PayPal U.S. business fee table.</li>
+    <li>IRS Topic No. 506: only qualified organizations are eligible to receive tax-deductible charitable contributions.</li>
+  </ol>
+  <p class="printHint">Note: This is a July 2026 decision aid, not tax/legal advice. Verify processor terms before launching payment collection because fee pages are living swamp creatures.</p>
+</section>
+<div class="footer">Mad Botters Money Wondergrid · built as a browser-openable local HTML report 🎩⚡</div>
+</div>
+<script>
+const processors={
+  stripe:{name:'Stripe',color:'#9172ff',pct:.029,fixed:.30,monthly:0,note:'Card via Payment Links'},
+  cheddarBasic:{name:'Cheddar Basic',color:'#ffad2f',pct:.0395,fixed:.95,monthly:0,note:'Card, team absorbs fees'},
+  cheddarTeamACH:{name:'Cheddar Team ACH',color:'#ffce59',pct:0,fixed:.95,monthly:35,note:'ACH/eCheck + monthly Team plan'},
+  square:{name:'Square Links',color:'#52d8ff',pct:.033,fixed:.30,monthly:0,note:'Online Payment Links'},
+  paypal:{name:'PayPal Links',color:'#5ca8ff',pct:.0299,fixed:.49,monthly:0,note:'Payment links / standard card model'}
+};
+const rooms={
+  stripe:{title:'Stripe',accent:'#9172ff',chips:['Best default','2.9% + $0.30 card','Payment Links','Embeddable button'],best:'Simple dues, sponsor links, QR codes, and clean reporting without a monthly subscription.',pros:['Lowest modeled card-link cost for $300 dues','Professional sponsor checkout','Strong future path if the team later needs forms or automation'],cons:['Less parent/group workflow than Cheddar Up','Setup/account verification can feel more business-like','Cash/check tracking is not its strength']},
+  cheddar:{title:'Cheddar Up',accent:'#ffad2f',chips:['Best parent ops','Forms + signups','Cash/check tracking','Fee pass-through'],best:'Dues collection when you also want registration questions, waivers, item options, and parent-friendly collection pages.',pros:['Purpose-built for groups and collections','Handles forms, signups, waivers, and offline payment tracking','Can pass fees to payers by default'],cons:['Basic card pricing is materially higher when team absorbs fees','Advanced features can require paid plans','Usually best as a linked collection page rather than a native embedded checkout']},
+  square:{title:'Square',accent:'#52d8ff',chips:['Best event-table option','3.3% + $0.30 links','QR codes','Buy buttons'],best:'Teams that expect outreach tables, STEM nights, concessions, or card-present fundraising.',pros:['Excellent in-person ecosystem','Payment links and QR codes are easy','Recognizable business checkout'],cons:['Online link pricing modeled higher than Stripe','Less group-form oriented than Cheddar Up','Can feel like using a store tool for a team collection']},
+  paypal:{title:'PayPal',accent:'#5ca8ff',chips:['Familiar fallback','2.99% + $0.49 links/cards','PayPal ecosystem'],best:'A secondary option for families or sponsors who strongly prefer PayPal.',pros:['Very recognizable to parents and sponsors','Easy link-based payment flow','Can be useful as an alternate checkout option'],cons:['Fee table is messy','Holds/disputes can be irritating','Less polished as a team finance system']}
+};
+const roomButtons=document.getElementById('roomButtons'), roomContent=document.getElementById('roomContent');
+roomButtons.innerHTML=Object.keys(rooms).map((id,i)=>`<button data-room="${id}" class="${i===0?'active':''}"><span style="color:${rooms[id].accent}">●</span> ${rooms[id].title}</button>`).join('');
+roomContent.innerHTML=Object.keys(rooms).map((id,i)=>{let r=rooms[id];return `<article class="processorRoom ${i===0?'active':''}" id="room-${id}" style="border-color:${r.accent}55"><h3 class="roomTitle" style="color:${r.accent}">${r.title}</h3><div class="chips">${r.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div><p class="lead"><b>Use it when:</b> ${r.best}</p><div class="proscons"><div><h3>Bright spots</h3><ul>${r.pros.map(x=>`<li>${x}</li>`).join('')}</ul></div><div><h3>Trap doors</h3><ul>${r.cons.map(x=>`<li>${x}</li>`).join('')}</ul></div></div></article>`}).join('');
+roomButtons.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{roomButtons.querySelectorAll('button').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.processorRoom').forEach(r=>r.classList.remove('active'));btn.classList.add('active');document.getElementById('room-'+btn.dataset.room).classList.add('active');}));
+const features=[
+['No monthly fee','🚀 Strong','🟢 Basic only','🟢 Strong','🟢 Strong','Stripe/Square/PayPal links have no standard monthly fee; Cheddar paid plans add monthly cost.'],
+['Lowest cost for $300 dues card payments','🚀 Strong','🔴 Weak on Basic','🟡 Okay','🟡 Okay','Stripe is lowest among the modeled card-link paths for $300 payments.'],
+['Best group forms + dues workflow','🟡 Limited','🚀 Strong','🟡 Limited','🔴 Weak','Cheddar Up is purpose-built around group collections, forms, sign-ups, waivers, and item options.'],
+['Can link from Google Sites','🟢 Strong','🟢 Strong','🟢 Strong','🟢 Strong','All can be used as a button/link from a team site.'],
+['Embeddable website button/widget','🟢 Strong','🟡 Button link','🟢 Strong','🟡 Button/link','Stripe and Square have embeddable buy buttons. Cheddar Up is most naturally a linked collection page.'],
+['QR code / flyer friendly','🟢 Strong','🟢 Strong','🟢 Strong','🟢 Strong','All are workable for QR codes or flyers.'],
+['Cash/check tracking','🔴 Weak','🚀 Strong','🟡 Possible manually','🔴 Weak','Cheddar Up explicitly supports cash/check payment tracking for collections.'],
+['In-person card fundraising','🟡 Possible with extra setup','🟡 Possible','🚀 Strong','🟡 Possible','Square is the cleanest if in-person card-present events become common.'],
+['Sponsor-friendly professional checkout','🚀 Strong','🟢 Strong','🟢 Strong','🟡 Familiar but less polished','Stripe/Square feel more business-professional; Cheddar feels community-group friendly.'],
+['Multi-admin / role management','🟡 Basic dashboard users','🟢 Strong on Team','🟡 Available','🟡 Available','Cheddar Team specifically emphasizes managers and permissions.'],
+['Best for non-ecommerce low volume','🚀 Strong','🟢 Strong','🟢 Strong','🟡 Okay','All work. Stripe and Cheddar Up fit the described use best.'],
+['Best overall FTC fit','🚀 Cost/control','🚀 Parent ops','🟡 Event tables','🔴 Fallback only','Recommended posture for this team.']
+];
+function mark(txt){let cls='maybe'; if(txt.includes('🚀'))cls='best'; else if(txt.includes('🟢'))cls='yes'; else if(txt.includes('🔴'))cls='no'; return `<span class="mark ${cls}">${txt}</span>`}
+document.getElementById('featureRows').innerHTML=features.map(r=>`<tr><td>${r[0]}<div class="note">${r[5]}</div></td><td>${mark(r[1])}</td><td>${mark(r[2])}</td><td>${mark(r[3])}</td><td>${mark(r[4])}</td></tr>`).join('');
+const ids=['stripe','cheddarBasic','cheddarTeamACH','square','paypal']; const enabled=Object.fromEntries(ids.map(id=>[id,true]));
+const studentsEl=document.getElementById('students'), duesEl=document.getElementById('dues'), sponsorsEl=document.getElementById('sponsors'), sponsorAvgEl=document.getElementById('sponsorAvg'), fundTxEl=document.getElementById('fundTx'), fundAvgEl=document.getElementById('fundAvg');
+const line=document.getElementById('lineChart'), bar=document.getElementById('barChart'), lctx=line.getContext('2d'), bctx=bar.getContext('2d');
+document.getElementById('toggles').innerHTML=ids.map(id=>`<label class="toggle"><input type="checkbox" data-id="${id}" checked><span style="color:${processors[id].color}">●</span>${processors[id].name}</label>`).join('');
+document.querySelectorAll('.toggle input').forEach(i=>i.addEventListener('change',e=>{enabled[e.target.dataset.id]=e.target.checked; update();}));
+['students','dues','sponsors','sponsorAvg','fundTx','fundAvg'].forEach(id=>document.getElementById(id).addEventListener('input',update));
+function money(n){return '$'+n.toLocaleString(undefined,{maximumFractionDigits:2,minimumFractionDigits:n<100?2:0})} function fee(p,amt){return amt*p.pct+p.fixed}
+function seasonTx(){let tx=[]; for(let i=0;i<+studentsEl.value;i++)tx.push(+duesEl.value); for(let i=0;i<+sponsorsEl.value;i++)tx.push(+sponsorAvgEl.value); for(let i=0;i<+fundTxEl.value;i++)tx.push(+fundAvgEl.value); return tx}
+function clear(ctx,c){ctx.clearRect(0,0,c.width,c.height)}
+function grid(ctx,c,maxY,title){ctx.strokeStyle='rgba(130,245,255,.18)';ctx.lineWidth=1;ctx.font='13px ui-sans-serif';ctx.fillStyle='rgba(244,251,255,.76)';for(let i=0;i<=5;i++){let y=350-(i/5)*285;ctx.beginPath();ctx.moveTo(62,y);ctx.lineTo(c.width-28,y);ctx.stroke();ctx.fillText(money(maxY*i/5),10,y+4)}ctx.fillStyle='rgba(244,251,255,.92)';ctx.font='bold 16px ui-sans-serif';ctx.fillText(title,62,28)}
+function drawLine(){clear(lctx,line);const amounts=[10,25,50,100,150,300,500,1000];let vals=[];ids.forEach(id=>{if(enabled[id])amounts.forEach(a=>vals.push(fee(processors[id],a)))});let maxY=Math.max(5,...vals)*1.22;grid(lctx,line,maxY,'Fee per transaction amount');lctx.font='12px ui-sans-serif';amounts.forEach((a,i)=>{let x=62+i*((line.width-104)/(amounts.length-1));lctx.fillStyle='rgba(244,251,255,.72)';lctx.fillText('$'+a,x-12,392)});ids.forEach(id=>{if(!enabled[id])return;let p=processors[id];lctx.strokeStyle=p.color;lctx.lineWidth=4;lctx.shadowColor=p.color;lctx.shadowBlur=12;lctx.beginPath();amounts.forEach((a,i)=>{let x=62+i*((line.width-104)/(amounts.length-1));let y=350-(fee(p,a)/maxY)*285;if(i===0)lctx.moveTo(x,y);else lctx.lineTo(x,y)});lctx.stroke();lctx.shadowBlur=0;amounts.forEach((a,i)=>{let x=62+i*((line.width-104)/(amounts.length-1));let y=350-(fee(p,a)/maxY)*285;lctx.fillStyle=p.color;lctx.beginPath();lctx.arc(x,y,4.5,0,Math.PI*2);lctx.fill();});});}
+function drawBar(results){clear(bctx,bar);let visible=results.filter(r=>enabled[r.id]);let maxY=Math.max(25,...visible.map(r=>r.fees))*1.22;grid(bctx,bar,maxY,'Estimated full-season processing cost');let w=(bar.width-132)/Math.max(visible.length,1);visible.forEach((r,i)=>{let x=72+i*w+14,h=(r.fees/maxY)*285,y=350-h;let grd=bctx.createLinearGradient(0,y,0,350);grd.addColorStop(0,processors[r.id].color);grd.addColorStop(1,'rgba(255,255,255,.06)');bctx.fillStyle=grd;bctx.shadowColor=processors[r.id].color;bctx.shadowBlur=16;bctx.fillRect(x,y,w-28,h);bctx.shadowBlur=0;bctx.fillStyle='rgba(244,251,255,.92)';bctx.font='bold 14px ui-sans-serif';bctx.fillText(money(r.fees),x,y-8);bctx.save();bctx.translate(x+4,392);bctx.rotate(-.25);bctx.fillText(processors[r.id].name,0,0);bctx.restore();});}
+function update(){studentsVal.textContent=studentsEl.value;duesVal.textContent=money(+duesEl.value);sponsorsVal.textContent=sponsorsEl.value;sponsorAvgVal.textContent=money(+sponsorAvgEl.value);fundTxVal.textContent=fundTxEl.value;fundAvgVal.textContent=money(+fundAvgEl.value);let tx=seasonTx(),total=tx.reduce((a,b)=>a+b,0);let results=ids.map(id=>{let p=processors[id];let f=tx.reduce((s,a)=>s+fee(p,a),0)+p.monthly*12;return{id,total,count:tx.length,fees:f,net:total-f,eff:total?f/total:0}});drawLine();drawBar(results);costRows.innerHTML=results.map(r=>`<tr><td><b style="color:${processors[r.id].color}">●</b> ${processors[r.id].name}<div class="note">${processors[r.id].note}</div></td><td>${money(r.total)}</td><td>${r.count}</td><td>${money(r.fees)}</td><td>${money(r.net)}</td><td>${(r.eff*100).toFixed(2)}%</td></tr>`).join('');let sorted=[...results].sort((a,b)=>a.fees-b.fees);quickNumbers.innerHTML=`<div class="pillStat"><b>${money(total)}</b><small>modeled gross receipts</small></div><div class="pillStat"><b>${tx.length}</b><small>modeled transactions</small></div><div class="pillStat"><b>${processors[sorted[0].id].name}</b><small>lowest modeled cost</small></div><div class="pillStat"><b>${money(sorted[0].fees)}</b><small>lowest estimated fees</small></div>`}
+update();
+</script>
+</body>
+</html>
