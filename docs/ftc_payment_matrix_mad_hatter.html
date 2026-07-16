@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTC Robotics Payment Processor Matrix: Cyber Wonderland</title>
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --grid-line: rgba(0, 243, 255, 0.05);
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff007f;
+            --neon-lime: #39ff14;
+            --neon-purple: #9d00ff;
+            --text-light: #e2e8f0;
+            --text-muted: #6b7c96;
+            --panel-bg: rgba(13, 18, 28, 0.75);
+            --panel-border: rgba(0, 243, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace, system-ui;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: var(--text-light);
+            padding: 40px 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas Backdrop for Drone Show Neon Particles */
+        #droneCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Floating, Bouncing Cyber Top Hat */
+        .cyber-hat-container {
+            position: absolute;
+            top: -50px;
+            right: 20px;
+            width: 160px;
+            height: 160px;
+            animation: floatHat 6s ease-in-out infinite;
+            pointer-events: auto;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .cyber-hat-container:hover {
+            animation: crazySpin 0.8s linear infinite;
+        }
+
+        /* Responsive adjustments for the hat */
+        @media (max-width: 768px) {
+            .cyber-hat-container {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin: 0 auto 20px auto;
+            }
+        }
+
+        @keyframes floatHat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(8deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes crazySpin {
+            0% { transform: rotate(0deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1.1); }
+        }
+
+        /* Interactive Circuit Header Box */
+        .cyber-banner {
+            border: 2px solid var(--neon-cyan);
+            background: var(--panel-bg);
+            padding: 35px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            position: relative;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.15), inset 0 0 15px rgba(0, 243, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cyber-banner:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 35px rgba(255, 0, 127, 0.3), inset 0 0 20px rgba(255, 0, 127, 0.1);
+        }
+
+        .tagline {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--neon-pink);
+            font-weight: bold;
+            text-shadow: 0 0 8px var(--neon-pink);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 15px var(--neon-cyan);
+            margin: 10px 0;
+        }
+
+        /* Control Deck Framework */
+        .control-deck {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background: rgba(10, 15, 26, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--panel-border);
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .deck-label {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-matrix {
+            background: transparent;
+            border: 1px solid var(--panel-border);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-matrix:hover {
+            transform: translateY(-2px) scale(1.05);
+            border-color: var(--neon-lime);
+            color: #fff;
+            box-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
+        }
+
+        .btn-matrix.active {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            background: rgba(0, 243, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+        }
+
+        /* 3D Animated Grid Rooms */
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (min-width: 950px) {
+            .matrix-grid {
+                grid-template-columns: 2.2fr 1fr;
+            }
+        }
+
+        .cyber-room {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 14px;
+            padding: 30px;
+            position: relative;
+            backdrop-filter: blur(6px);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s ease, border-color 0.5s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        /* 3D Tilting Effect & Dynamic Glow on Hover */
+        .cyber-room:hover {
+            border-color: var(--neon-pink);
+            box-shadow: 0 15px 35px rgba(255, 0, 127, 0.15);
+            transform: translateY(-8px) rotateX(2deg) rotateY(-1deg);
+        }
+
+        .room-heading {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--neon-lime);
+            padding-left: 15px;
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+        }
+
+        .alert-box {
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.08), rgba(157, 0, 255, 0.08));
+            border: 1px dashed var(--neon-lime);
+            padding: 22px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 5px rgba(57, 255, 20, 0.1); }
+            50% { box-shadow: 0 0 20px rgba(57, 255, 20, 0.3); border-color: var(--neon-cyan); }
+            100% { box-shadow: 0 0 5px rgba(57, 255, 20, 0.1); }
+        }
+
+        /* Responsive Kinetic Tables */
+        .table-vault {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid var(--panel-border);
+            background: rgba(5, 8, 15, 0.8);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background: #0f1422;
+            color: var(--neon-cyan);
+            padding: 16px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            border-bottom: 2px solid var(--panel-border);
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.05);
+            font-size: 0.9rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        tr:hover td {
+            background: rgba(255, 0, 127, 0.05);
+            color: #fff;
+        }
+
+        .hidden-node {
+            display: none !important;
+        }
+
+        /* Badges */
+        .matrix-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .badge-cyan { background: rgba(0, 243, 255, 0.1); color: var(--neon-cyan); border: 1px solid var(--neon-cyan); }
+        .badge-pink { background: rgba(255, 0, 127, 0.1); color: var(--neon-pink); border: 1px solid var(--neon-pink); }
+        .badge-lime { background: rgba(57, 255, 20, 0.1); color: var(--neon-lime); border: 1px solid var(--neon-lime); }
+
+        /* Custom Interactive Metric Bar indicators */
+        .meter-track {
+            background: #0d121f;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            margin-top: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .meter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan));
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /* Expandable Quantum Cards */
+        .quantum-card {
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: rgba(10, 14, 23, 0.6);
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .quantum-card:hover {
+            border-color: var(--neon-cyan);
+            transform: scale(1.02);
+        }
+
+        .quantum-trigger {
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quantum-content {
+            padding: 0 18px 18px 18px;
+            display: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .quantum-card.expanded .quantum-content {
+            display: block;
+        }
+
+        .footer-terminal {
+            margin-top: 50px;
+            border-top: 1px dashed var(--panel-border);
+            padding-top: 25px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Interactive Backdrop Particle Node Deck -->
+<canvas id="droneCanvas"></canvas>
+
+<div class="container">
+
+    <!-- Cyber Banner Frame -->
+    <div class="cyber-banner">
+        <!-- Re-engineered Exaggerated Mad Hatter Top Hat Object with FTC Team Number -->
+        <div class="cyber-hat-container" title="Mad Hatter Core Logic Engine. Overclocked for Team 22738!">
+            <svg viewBox="0 0 120 120" width="100%" height="100%">
+                <!-- The Exaggerated Mad Hatter Crown: Flared out at top, tapered down to the brim -->
+                <path d="M15 15 L105 15 L85 75 L35 75 Z" fill="#0d121f" stroke="#00f3ff" stroke-width="3"/>
+                <!-- Flared Top Cap Lid Line Overlay -->
+                <ellipse cx="60" cy="15" rx="45" ry="6" fill="#07090e" stroke="#00f3ff" stroke-width="2"/>
+                
+                <!-- The Infamous Price Card tucked into the band: Modified to show FTC Team Number 22738 split onto two lines -->
+                <g transform="rotate(-12 75 50)">
+                    <rect x="68" y="32" width="28" height="32" rx="2" fill="#ffffff" stroke="#ff007f" stroke-width="1.5"/>
+                    <text x="82" y="46" font-family="'Courier New', monospace" font-size="11" font-weight="900" fill="#07090e" text-anchor="middle">22</text>
+                    <text x="82" y="58" font-family="'Courier New', monospace" font-size="10" font-weight="900" fill="#07090e" text-anchor="middle">738</text>
+                </g>
+
+                <!-- Neon Fusion Accent Hat Band Ribbon -->
+                <path d="M32 63 L88 63 L85 75 L35 75 Z" fill="#9d00ff" opacity="0.9"/>
+                <!-- Hat Brim -->
+                <ellipse cx="60" cy="77" rx="52" ry="11" fill="#07090e" stroke="#ff007f" stroke-width="3"/>
+                
+                <!-- Neon Tech Circuit Accents inside the Crown -->
+                <line x1="45" y1="35" x2="60" y2="35" stroke="#39ff14" stroke-width="2"/>
+                <line x1="60" y1="35" x2="65" y2="48" stroke="#39ff14" stroke-width="2"/>
+                <circle cx="65" cy="48" r="3" fill="#39ff14"/>
+            </svg>
+        </div>
+
+        <div class="tagline">SYSTEM ANALYSIS MAP // QUANTUM ROBOTICS</div>
+        <h1>FTC Team 22738 Payment Processor Engine</h1>
+        <p style="color: var(--text-muted); max-width: 750px;">
+            An interactive, living operational model tuned for small-scale, low-frequency, tight-budget youth robotics frameworks. Built with zero tracking cookies and raw data compliance.
+        </p>
+    </div>
+
+    <!-- Control Station Console Deck -->
+    <div class="control-deck">
+        <span class="deck-label">Active Node Clusters:</span>
+        <button class="btn-matrix active" onclick="toggleNode('stripe', this)">Stripe Payment Links</button>
+        <button class="btn-matrix active" onclick="toggleNode('square', this)">Square Link Engine</button>
+        <button class="btn-matrix active" onclick="toggleNode('cheddar', this)">Cheddar Up (Basic Tier)</button>
+        <button class="btn-matrix active" onclick="toggleNode('paypal', this)">PayPal Ecosystem</button>
+        
+        <span class="deck-label" style="margin-left: auto;">Cost Inversion Modifiers:</span>
+        <button class="btn-matrix active" id="mode-absorb" onclick="mutateFeeMode('absorb')">Team Absorbs Hit</button>
+        <button class="btn-matrix" id="mode-pass" onclick="mutateFeeMode('pass')">Forward Fee To Payer</button>
+    </div>
+
+    <!-- Main Spatial Stations Layout Grid -->
+    <div class="matrix-grid">
+        
+        <!-- Center-Left Computational Nodes -->
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+            
+            <!-- Strategic Recommendations Block -->
+            <div class="cyber-room">
+                <div class="room-heading">◈ Core Execution Directives</div>
+                <div class="alert-box">
+                    <strong>Primary Node Choice: Stripe Payment Links</strong> delivers the cleanest developer experience with an elegant zero-monthly framework for standard card operations (2.9% + $0.30). Highly recommended if your team budget allows standard operational absorption.
+                    <br><br>
+                    <strong>The Bulletproof Vault Option: Cheddar Up (Basic Plan)</strong> stands apart as the only out-of-the-box system that handles zero-cost passing configuration gracefully to avoid draining the team's engineering funds.
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">
+                    *Notice regarding Square: A major early-2026 restructuring boosted digital online entry to 3.3% + $0.30, compounding friction on your team dues. Avoid unless physical point-of-sale hardware is already heavily utilized on-site.
+                </p>
+            </div>
+
+            <!-- Dynamic Interactive Calculation Grid Matrix -->
+            <div class="cyber-room">
+                <div class="room-heading">◈ High-Fidelity Simulation Matrix</div>
+                <div class="table-vault">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Simulated Event Node</th>
+                                <th class="cell-node stripe">Stripe</th>
+                                <th class="cell-node square">Square</th>
+                                <th class="cell-node cheddar">Cheddar Up</th>
+                                <th class="cell-node paypal">PayPal Hub</th>
+                            </tr>
+                        </thead>
+                        <tbody id="live-matrix-engine">
+                            <!-- Injected dynamically via highly accurate mathematical computation -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Feature Infrastructure Architecture Table -->
+            <div class="cyber-room">
+                <div class="room-heading">◈ Feature Matrix Blueprint</div>
+                <div class="table-vault">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Capability Array</th>
+                                <th class="cell-node stripe">Stripe</th>
+                                <th class="cell-node square">Square</th>
+                                <th class="cell-node cheddar">Cheddar Up</th>
+                                <th class="cell-node paypal">PayPal Hub</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Base Fee Blueprint</strong></td>
+                                <td class="cell-node stripe">2.9% + $0.30<br><span class="matrix-badge badge-cyan">Standard</span></td>
+                                <td class="cell-node square">3.3% + $0.30<br><span class="matrix-badge badge-pink">2026 Shift</span></td>
+                                <td class="cell-node cheddar">3.95% + $0.95<br><span class="matrix-badge badge-pink">High Base</span></td>
+                                <td class="cell-node paypal">2.99% - 3.49%<br>+ $0.49</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Native Fee Passing</strong></td>
+                                <td class="cell-node stripe">No (Requires custom API code)</td>
+                                <td class="cell-node square">No</td>
+                                <td class="cell-node cheddar">Yes<br><span class="matrix-badge badge-lime">Native Toggle</span></td>
+                                <td class="cell-node paypal">No</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Low-Cost ACH Channel</strong></td>
+                                <td class="cell-node stripe">0.8% ($5 Cap) + Verification</td>
+                                <td class="cell-node square">1% via Invoice ($1 min)</td>
+                                <td class="cell-node cheddar">Requires Pro Account Upgrade</td>
+                                <td class="cell-node paypal">1% via Business Invoice</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right System Cluster Rails -->
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+            
+            <!-- Baseline Parameters Audit Log -->
+            <div class="cyber-room">
+                <div class="room-heading">◈ Audit Assumptions Matrix</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 12px;">
+                    <div>• <strong>Verification Index:</strong> Current mid-2026 direct documentation. Non-profit pricing schedules are entirely disabled.</div>
+                    <div>• <strong>PayPal Wallet Blending:</strong> Calculated on a 50/50 mix of regular cards and direct merchant wallets, delivering a baseline effective evaluation metric of 3.24% + $0.49.</div>
+                </div>
+            </div>
+
+            <!-- Accordion Interface Ecosystem Map -->
+            <div class="cyber-room">
+                <div class="room-heading">◈ Deep Processing Nodes</div>
+                
+                <div class="quantum-card">
+                    <button class="quantum-trigger" onclick="toggleQuantum(this)">
+                        <span>Stripe Core Ecosystem</span> <span>[+]</span>
+                    </button>
+                    <div class="quantum-content">
+                        Elegant link engine with zero setup latency. High security protocols prevent fraudulent disruptions during larger team corporate sponsorship transfers. Excellent metadata fields for sorting dues from general team donations.
+                    </div>
+                </div>
+
+                <div class="quantum-card">
+                    <button class="quantum-trigger" onclick="toggleQuantum(this)">
+                        <span>Square Engine Link</span> <span>[+]</span>
+                    </button>
+                    <div class="quantum-content">
+                        Provides clean out-of-the-box payment flows, but early-2026 operational shifts inflated card-not-present processing parameters significantly to 3.3% + $0.30. Best used if your team relies heavily on standard physical hardware terminals.
+                    </div>
+                </div>
+
+                <div class="quantum-card">
+                    <button class="quantum-trigger" onclick="toggleQuantum(this)">
+                        <span>Cheddar Up Booster System</span> <span>[+]</span>
+                    </button>
+                    <div class="quantum-content">
+                        Designed explicitly for schools, teams, and clubs. Handles forms, rosters, and t-shirt sizing within the base platform. Extremely penalizing if the team absorbs the fees, but incredibly powerful if configured for parent-paid coverage mode.
+                    </div>
+                </div>
+
+                <div class="quantum-card">
+                    <button class="quantum-trigger" onclick="toggleQuantum(this)">
+                        <span>PayPal Business Hub</span> <span>[+]</span>
+                    </button>
+                    <div class="quantum-content">
+                        Instantly recognizable for parent groups, decreasing transaction checkout friction. However, managing multiple tiered fee schedules between native digital cards and wallet logins complicates exact revenue accounting.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Document Citations Terminal -->
+    <div class="footer-terminal">
+        <strong>VERIFIED AUDIT BLUEPRINT SOURCES (MID-2026 CORE DOCUMENTATION Updates):</strong><br>
+        [1] Stripe Online Payment Infrastructure Fee Matrices // [2] Square Online Payment Link Restructuring Act // [3] Cheddar Up Merchant Group Processing Schedules // [4] PayPal Merchant & Digital Smart Wallet Fee Framework protocols.
+    </div>
+
+</div>
+
+<script>
+    // Financial Scenario Database Core Array
+    const targets = [
+        { id: "single_due", label: "Single Student Team Dues", amount: 300, count: 1 },
+        { id: "vol_12", label: "12 Students Dues Volume", amount: 3600, count: 12 },
+        { id: "vol_15", label: "15 Students Dues Volume", amount: 4500, count: 15 },
+        { id: "donation_100", label: "Occasional Team Donation", amount: 100, count: 1 },
+        { id: "spon_250", label: "Bronze Level Sponsor", amount: 250, count: 1 },
+        { id: "spon_500", label: "Silver Level Sponsor", amount: 500, count: 1 },
+        { id: "spon_1000", label: "Gold Level Sponsor", amount: 1000, count: 1 }
+    ];
+
+    let currentMode = 'absorb';
+    let visibleNodes = { stripe: true, square: true, cheddar: true, paypal: true };
+
+    function calculateDynamicLoss(provider, amount, count) {
+        if (currentMode === 'absorb') {
+            switch(provider) {
+                case 'stripe': return (amount * 0.029) + (0.30 * count);
+                case 'square': return (amount * 0.033) + (0.30 * count);
+                case 'cheddar': return (amount * 0.0395) + (0.95 * count);
+                case 'paypal': return (amount * 0.0324) + (0.49 * count);
+                default: return 0;
+            }
+        }
+        return 0; // Cost to team is zero in forward-fee mode
+    }
+
+    function calculatePayerTicket(provider, amount, count) {
+        const individualBase = amount / count;
+        if (currentMode === 'absorb') return individualBase;
+        
+        switch(provider) {
+            case 'stripe': return ((individualBase + 0.30) / (1 - 0.029));
+            case 'square': return ((individualBase + 0.30) / (1 - 0.033));
+            case 'cheddar': return individualBase + (individualBase * 0.0395) + 0.95;
+            case 'paypal': return ((individualBase + 0.49) / (1 - 0.0324));
+            default: return individualBase;
+        }
+    }
+
+    function processSimulationMatrix() {
+        const tbody = document.getElementById('live-matrix-engine');
+        tbody.innerHTML = '';
+
+        targets.forEach(target => {
+            const tr = document.createElement('tr');
+            
+            const tdLabel = document.createElement('td');
+            tdLabel.innerHTML = `<strong>${target.label}</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">Base Capital: $${target.amount}</span>`;
+            tr.appendChild(tdLabel);
+
+            ['stripe', 'square', 'cheddar', 'paypal'].forEach(prov => {
+                const td = document.createElement('td');
+                td.className = `cell-node ${prov}`;
+                if (!visibleNodes[prov]) td.classList.add('hidden-node');
+
+                const totalFee = calculateDynamicLoss(prov, target.amount, target.count);
+                const ticketPrice = calculatePayerTicket(prov, target.amount, target.count);
+
+                if (currentMode === 'absorb') {
+                    const remainingFunds = target.amount - totalFee;
+                    const efficiencyPct = ((remainingFunds / target.amount) * 100).toFixed(0);
+                    td.innerHTML = `
+                        <div style="color:var(--neon-pink); font-weight:bold;">-$${totalFee.toFixed(2)} Fee</div>
+                        <div style="font-size:0.8rem; color:#fff;">Kept: $${remainingFunds.toFixed(2)}</div>
+                        <div class="meter-track">
+                            <div class="meter-fill" style="width: ${efficiencyPct}%;"></div>
+                        </div>
+                    `;
+                } else {
+                    const totalSurcharge = (ticketPrice * target.count) - target.amount;
+                    td.innerHTML = `
+                        <div style="color:var(--neon-lime); font-weight:bold;">$0.00 Net Cost</div>
+                        <div style="font-size:0.8rem; color:#fff;">Payer Pays: $${ticketPrice.toFixed(2)}</div>
+                        <div style="font-size:0.7rem; color:var(--text-muted);">Markup: +$${totalSurcharge.toFixed(2)}</div>
+                    `;
+                }
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        });
+    }
+
+    function toggleNode(prov, btn) {
+        visibleNodes[prov] = !visibleNodes[prov];
+        btn.classList.toggle('active');
+        document.querySelectorAll(`.cell-node.${prov}`).forEach(el => {
+            el.classList.toggle('hidden-node', !visibleNodes[prov]);
+        });
+    }
+
+    function mutateFeeMode(mode) {
+        currentMode = mode;
+        document.getElementById('mode-absorb').classList.toggle('active', mode === 'absorb');
+        document.getElementById('mode-pass').classList.toggle('active', mode === 'pass');
+        processSimulationMatrix();
+    }
+
+    function toggleQuantum(btn) {
+        const parent = btn.parentElement;
+        parent.classList.toggle('expanded');
+        btn.querySelector('span:last-child').innerText = parent.classList.contains('expanded') ? '[-]' : '[+]';
+    }
+
+    // ==========================================
+    // KINETIC BACKGROUND DRONE PARTICLES SHOW ENGINE
+    // ==========================================
+    const canvas = document.getElementById('droneCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let particles = [];
+    const maxParticles = 65;
+    let morphTimer = 0;
+    let activeShape = 'scatter'; // 'scatter', 'hat', 'gear'
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Create particle array
+    for(let i=0; i<maxParticles; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            targetX: Math.random() * canvas.width,
+            targetY: Math.random() * canvas.height,
+            speed: 0.03 + Math.random() * 0.02,
+            radius: 1.5 + Math.random() * 2,
+            color: i % 3 === 0 ? 'rgba(0, 243, 255, 0.4)' : (i % 3 === 1 ? 'rgba(255, 0, 127, 0.4)' : 'rgba(57, 255, 20, 0.3)')
+        });
+    }
+
+    // Mathematical coordinate generation for "Drone Show" formations
+    function getFormedTargets(shape, index, total) {
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+
+        if (shape === 'hat') {
+            // Mapping top-hat silhouette coordinates for the matrix backdrop
+            if (index < total * 0.3) {
+                // Hat Brim line
+                let pct = index / (total * 0.3);
+                return { x: cx - 200 + (pct * 400), y: cy + 100 };
+            } else if (index < total * 0.6) {
+                // Left & Right Crown walls
+                let pct = (index - total * 0.3) / (total * 0.3);
+                if (index % 2 === 0) {
+                    return { x: cx - 100, y: cy + 100 - (pct * 150) };
+                } else {
+                    return { x: cx + 100, y: cy + 100 - (pct * 150) };
+                }
+            } else {
+                // Top Crown Cover line
+                let pct = (index - total * 0.4) / (total * 0.4);
+                return { x: cx - 100 + (pct * 200), y: cy - 50 };
+            }
+        } else if (shape === 'gear') {
+            // Simple circular algorithmic planetary gears formation
+            let angle = (index / total) * Math.PI * 2;
+            let radius = 140 + (index % 5 === 0 ? 30 : 0); // simulated gear teeth spikes
+            return { x: cx + Math.cos(angle) * radius, y: cy + Math.sin(angle) * radius };
+        } else {
+            // standard ambient drift node scattering pattern
+            if (Math.random() < 0.01) {
+                return { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight };
+            }
+            return null;
+        }
+    }
+
+    // Quantum Backdrop Loop Tick Engine
+    function renderDroneEcosystem() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        morphTimer++;
+        if (morphTimer % 450 === 0) {
+            const states = ['scatter', 'hat', 'gear'];
+            activeShape = states[Math.floor(Math.random() * states.length)];
+        }
+
+        // Compute particle paths
+        particles.forEach((p, i) => {
+            let definedCoords = getFormedTargets(activeShape, i, maxParticles);
+            if (definedCoords) {
+                p.targetX = definedCoords.x;
+                p.targetY = definedCoords.y;
+            }
+
+            // Standard Lerp transitions
+            p.x += (p.targetX - p.x) * p.speed;
+            p.y += (p.targetY - p.y) * p.speed;
+
+            // Render digital network node joints
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = p.color;
+            ctx.fill();
+            ctx.shadowBlur = 0; // reset profile
+
+            // Inter-node matrix line web bridges
+            particles.forEach((otherP, otherIdx) => {
+                if (i !== otherIdx) {
+                    let dist = Math.hypot(p.x - otherP.x, p.y - otherP.y);
+                    if (dist < 85) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(otherP.x, otherP.y);
+                        ctx.strokeStyle = `rgba(0, 243, 255, ${0.12 * (1 - dist/85)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            });
+        });
+
+        requestAnimationFrame(renderDroneEcosystem);
+    }
+
+    // Fire Up Engines
+    processSimulationMatrix();
+    renderDroneEcosystem();
+</script>
+
+</body>
+</html>
